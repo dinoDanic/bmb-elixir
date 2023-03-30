@@ -10,6 +10,11 @@ import Config
 config :bmb,
   ecto_repos: [Bmb.Repo]
 
+config :bmb, Bmb.UserManager.Guardian,
+  issuer: "bmb",
+  # put the result of the mix command above here
+  secret_key: "r70r5lFVnB7JSdDGwi4eBQne2CsbesjsoRse4dwopSWBMuUXVT5vo6lVi/h3zaBF"
+
 # Configures the endpoint
 config :bmb, BmbWeb.Endpoint,
   url: [host: "localhost"],
