@@ -11,6 +11,7 @@ defmodule Bmb.Schema do
   end
 
   object :product do
+    field :id, non_null(:id)
     field :name, non_null(:string)
     field :price, :integer
     field :meta_title, :string
@@ -31,8 +32,14 @@ defmodule Bmb.Schema do
     end
 
     @desc "Get all products"
-    field :all_products, non_null(list_of(non_null(:product))) do
+    field :all_products, list_of(:product) do
       resolve(&ProductResolver.all_products/3)
+    end
+
+    @desc "Get Product by ID"
+    field :get_product_by_id, :product do
+      arg(:id, non_null(:id))
+      resolve(&ProductResolver.get_product_by_id/3)
     end
   end
 

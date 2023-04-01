@@ -2,7 +2,7 @@ alias Ecto.Repo
 alias Bmb.Product
 alias Bmb.Repo
 
-File.stream!("#{System.user_home()}/projects/bmb-elixir/bmb/csv/bmb2.csv")
+File.stream!("#{System.user_home()}/projects/bmb-elixir/bmb/csv/products.csv")
 |> CSV.decode(headers: true, escape_max_lines: 1000)
 |> Enum.each(fn row ->
   {:ok,
