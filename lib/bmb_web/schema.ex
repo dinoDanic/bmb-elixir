@@ -41,6 +41,12 @@ defmodule Bmb.Schema do
       arg(:id, non_null(:id))
       resolve(&ProductResolver.get_product_by_id/3)
     end
+
+    @desc "Get Product by Category id"
+    field :get_products_by_category_id, list_of(:product) do
+      arg(:category_id, non_null(:id))
+      resolve(&ProductResolver.get_products_by_category_id/3)
+    end
   end
 
   mutation do
