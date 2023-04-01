@@ -15,7 +15,7 @@ defmodule BmbWeb.Router do
     forward "/graphiql", Absinthe.Plug.GraphiQL,
       schema: Bmb.Schema,
       interface: :simple,
-      context: %{pubsub: Bmb.Endpoint}
+      context: %{pubsub: BmbWeb.Endpoint}
   end
 
   # Enable LiveDashboard and Swoosh mailbox preview in development

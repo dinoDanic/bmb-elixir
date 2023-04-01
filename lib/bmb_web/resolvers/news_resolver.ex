@@ -1,8 +1,10 @@
 defmodule Bmb.NewsResolver do
   alias Bmb.News
+  alias Bmb.News.Link
+  alias Bmb.Repo
 
   def all_links(_root, _args, _info) do
-    {:ok, News.list_links()}
+    {:ok, Repo.all(Link)}
   end
 
   def create_link(_root, args, _info) do
