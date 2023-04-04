@@ -1,36 +1,24 @@
-# ./Dockerfile
-
-# Extend from the official Elixir image.
+# Use the official Elixir image as the base image
 FROM elixir:latest
 
-# Create app directory and copy the Elixir projects into it.
-# RUN mkdir /app
-# COPY . /app
-# WORKDIR /app
-
-# Install Hex package manager.
-# By using `--force`, we don’t need to type “Y” to confirm the installation.
-# RUN mix local.hex --force
-
-# Compile the project.
-# RUN mix do compile
-
-RUN mkdir /app
+# Set the working directory in the container
 WORKDIR /app
 
-COPY mix.exs mix.lock ./
-
-RUN mix do deps.get, deps.compile
-
-# COPY assets/package.json ./assets/
-# RUN npm install --prefix ./assets
-
+# Copy the application files into the container
 COPY . .
 
-RUN mix do release
+# Install dependencies
+RUN mix local.hex --force && \
+    mix local.rebar --force && \
+    mix deps.get
 
-# COPY entrypoint.sh /usr/bin/
-# RUN chmod +x /usr/bin/entrypoint.sh
-# ENTRYPOINT ["entrypoint.sh"]
+# Build the application
+RUN mix compile
 
+# Start the application
+EXPOSE 4000
+COPY entrypoint.sh /usr/bin/
+RUN chmod +x /usr/bin/entrypoint.sh
+ENTRYPOINT ["entrypoint.sh"]
 CMD ["mix", "phx.server"]
+
