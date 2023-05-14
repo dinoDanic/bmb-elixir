@@ -7,6 +7,13 @@ import Config
 # Configures Swoosh API Client
 config :swoosh, api_client: Swoosh.ApiClient.Finch, finch_name: Bmb.Finch
 
+# CORS
+config :cors_plug,
+  origin: [
+    "http://localhost:3000"
+  ],
+  methods: ["GET", "POST", "FETCH", "OPTIONS"]
+
 # Do not print debug messages in production
 config :logger, level: :info
 

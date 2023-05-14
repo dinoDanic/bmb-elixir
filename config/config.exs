@@ -10,6 +10,13 @@ import Config
 config :bmb,
   ecto_repos: [Bmb.Repo]
 
+# CORS
+config :cors_plug,
+  origin: [
+    "http://localhost:3000"
+  ],
+  methods: ["GET", "POST", "FETCH", "OPTIONS"]
+
 # Configures the endpoint
 config :bmb, BmbWeb.Endpoint,
   url: [host: "localhost"],

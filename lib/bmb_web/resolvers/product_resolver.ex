@@ -39,4 +39,5 @@ defmodule Bmb.ProductResolver do
 
     {:ok, products}
   end
+
 end

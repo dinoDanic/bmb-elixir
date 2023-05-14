@@ -6,6 +6,7 @@ defmodule Bmb.Category do
   schema "categories" do
     field :name, :string
     field :parent_id, :id
+    field :active, :boolean, default: true
 
     timestamps()
   end

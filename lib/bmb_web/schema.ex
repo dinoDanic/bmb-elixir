@@ -3,6 +3,7 @@ defmodule Bmb.Schema do
 
   alias Bmb.NewsResolver
   alias Bmb.ProductResolver
+  alias Bmb.CategoryResolver
 
   object :link do
     field :id, non_null(:id)
@@ -23,6 +24,12 @@ defmodule Bmb.Schema do
     field :active, :boolean
     # TODO: ENUM CURRENCY
     field :currency, :string
+  end
+
+  object :category do 
+    field :name, non_null(:string)
+    field :parent_id, :string
+    field :active, :boolean
   end
 
   query do
@@ -46,6 +53,11 @@ defmodule Bmb.Schema do
     field :get_products_by_category_id, list_of(:product) do
       arg(:category_id, non_null(:id))
       resolve(&ProductResolver.get_products_by_category_id/3)
+    end
+
+    @desc "Get active Categories"
+    field :get_categories, list_of(:category) do
+      resolve(&CategoryResolver.get_categories/3)
     end
   end
 
