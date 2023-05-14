@@ -6,6 +6,7 @@ defmodule Bmb.Repo.Migrations.CreateProduct do
 
     create table(:products) do
       add :name, :string, null: false
+      add :code, :string, unique: true, null: true
       add :price, :decimal, null: false
       add :currency, :currencyEnum, default: "EUR"
       add :meta_title, :string, null: true
