@@ -26,18 +26,13 @@ defmodule Bmb.Schema do
     field :currency, :string
   end
 
-  object :category do 
+  object :category do
     field :name, non_null(:string)
     field :parent_id, :string
     field :active, :boolean
   end
 
   query do
-    @desc "Get all links"
-    field :all_links, non_null(list_of(non_null(:link))) do
-      resolve(&NewsResolver.all_links/3)
-    end
-
     @desc "Get all products"
     field :all_products, list_of(:product) do
       resolve(&ProductResolver.all_products/3)
@@ -49,15 +44,20 @@ defmodule Bmb.Schema do
       resolve(&ProductResolver.get_product_by_id/3)
     end
 
-    @desc "Get Product by Category id"
+    @desc "Get Products by Category id"
     field :get_products_by_category_id, list_of(:product) do
       arg(:category_id, non_null(:id))
       resolve(&ProductResolver.get_products_by_category_id/3)
     end
 
-    @desc "Get active Categories"
-    field :get_categories, list_of(:category) do
-      resolve(&CategoryResolver.get_categories/3)
+    @desc "Get parent Categories"
+    field :get_parent_categories, list_of(:category) do
+      resolve(&CategoryResolver.get_parent_categories/3)
+    end
+
+    @desc "Get categories by parent"
+    field :get_categories_by_parent, list_of(:category) do
+      resolve(&CategoryResolver.get_categories_by_parent_id/3)
     end
   end
 
