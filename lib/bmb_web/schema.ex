@@ -33,15 +33,15 @@ defmodule Bmb.Schema do
   end
 
   query do
-    @desc "Get all products"
-    field :all_products, list_of(:product) do
-      resolve(&ProductResolver.all_products/3)
-    end
-
     @desc "Get Product by ID"
     field :get_product_by_id, :product do
       arg(:id, non_null(:id))
       resolve(&ProductResolver.get_product_by_id/3)
+    end
+
+    @desc "Get all products"
+    field :all_products, list_of(:product) do
+      resolve(&ProductResolver.all_products/3)
     end
 
     @desc "Get Products by Category id"
