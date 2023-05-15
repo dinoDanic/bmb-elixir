@@ -2,7 +2,7 @@ defmodule Bmb.Repo.Migrations.CreateProduct do
   use Ecto.Migration
 
   def change do
-    execute "CREATE TYPE currencyEnum AS ENUM ('EUR', 'HRK')"
+    # execute "CREATE TYPE currencyEnum AS ENUM ('EUR', 'HRK')"
 
     create table(:products) do
       add :name, :string, null: false
