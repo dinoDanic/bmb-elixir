@@ -22,8 +22,6 @@ defmodule Bmb.Schema do
     field :ean, :string
     field :weight, :integer
     field :active, :boolean
-    # TODO: ENUM CURRENCY
-    field :currency, :string
   end
 
   object :category do

@@ -13,7 +13,6 @@ defmodule Bmb.Product do
     field :ean, :string
     field :weight, :integer
     field :active, :boolean, default: false
-    field :currency, CurrencyEnum, default: "EUR"
 
     timestamps()
   end
