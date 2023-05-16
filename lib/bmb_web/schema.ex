@@ -28,6 +28,7 @@ defmodule Bmb.Schema do
     field :name, non_null(:string)
     field :parent_id, :string
     field :active, :boolean
+    field :id, non_null(:id)
   end
 
   query do
