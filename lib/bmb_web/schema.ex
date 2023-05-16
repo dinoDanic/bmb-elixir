@@ -55,8 +55,14 @@ defmodule Bmb.Schema do
     end
 
     @desc "Get categories by parent"
-    field :get_categories_by_parent, list_of(:category) do
+    field :get_categories_by_parent_id, list_of(:category) do
+      arg(:parent_id, non_null(:id))
       resolve(&CategoryResolver.get_categories_by_parent_id/3)
+    end
+
+    @desc "Get child categories"
+    field :get_child_categories, list_of(:category) do
+      resolve(&CategoryResolver.get_child_categories/3)
     end
   end
 
