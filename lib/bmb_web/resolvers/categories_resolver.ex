@@ -3,29 +3,22 @@ defmodule Bmb.CategoryResolver do
   alias Bmb.Category
   import Ecto.Query
 
-  def get_parent_categories(_parent, _args, _ctx) do
+  def get_categories(_parent, _args, _ctx) do
     query =
-      from c in Category,
+      from(c in Category,
         where: c.active == true and c.parent_id == 0,
         select: c
+      )
 
     {:ok, Repo.all(query)}
   end
 
-  def get_categories_by_parent_id(_parent, %{parent_id: parent_id}, _ctx) do
+  def get_childrens(category, _args, _ctx) do
     query =
-      from c in Category,
-        where: c.active == true and c.parent_id == ^parent_id,
+      from(c in Category,
+        where: c.active == true and c.parent_id == ^category.id,
         select: c
-
-    {:ok, Repo.all(query)}
-  end
-
-  def get_child_categories(_parent, _args, _ctx) do
-    query =
-      from c in Category,
-        where: c.active == true and c.parent_id != 0,
-        select: c
+      )
 
     {:ok, Repo.all(query)}
   end

@@ -29,6 +29,7 @@ defmodule Bmb.Schema do
     field :parent_id, :string
     field :active, :boolean
     field :id, non_null(:id)
+    field :childrens, list_of(:category), resolve: &CategoryResolver.get_childrens/3
   end
 
   query do
@@ -49,20 +50,9 @@ defmodule Bmb.Schema do
       resolve(&ProductResolver.get_products_by_category_id/3)
     end
 
-    @desc "Get parent Categories"
-    field :get_parent_categories, list_of(:category) do
-      resolve(&CategoryResolver.get_parent_categories/3)
-    end
-
-    @desc "Get categories by parent"
-    field :get_categories_by_parent_id, list_of(:category) do
-      arg(:parent_id, non_null(:id))
-      resolve(&CategoryResolver.get_categories_by_parent_id/3)
-    end
-
-    @desc "Get child categories"
-    field :get_child_categories, list_of(:category) do
-      resolve(&CategoryResolver.get_child_categories/3)
+    @desc "Get categories"
+    field :get_categories, list_of(:category) do
+      resolve(&CategoryResolver.get_categories/3)
     end
   end
 
