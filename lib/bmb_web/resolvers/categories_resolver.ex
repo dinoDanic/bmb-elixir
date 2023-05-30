@@ -22,4 +22,17 @@ defmodule Bmb.CategoryResolver do
 
     {:ok, Repo.all(query)}
   end
+
+
+  def get_category_by_id(_root, %{id: id}, _info) do
+    category = Repo.get(Category, id)
+
+    case category do
+      nil ->
+        {:error, "category not found"}
+
+      _ ->
+        {:ok, category}
+    end
+  end
 end
