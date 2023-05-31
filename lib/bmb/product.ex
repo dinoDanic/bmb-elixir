@@ -5,6 +5,7 @@ defmodule Bmb.Product do
 
   schema "products" do
     field :name, :string
+    field :display_name, :string
     field :price, :decimal
     field :meta_title, :string
     field :meta_description, :string

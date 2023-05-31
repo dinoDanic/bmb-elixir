@@ -14,6 +14,7 @@ defmodule Bmb.Schema do
   object :product do
     field :id, non_null(:id)
     field :name, non_null(:string)
+    field :display_name, non_null(:string)
     field :price, :integer
     field :meta_title, :string
     field :meta_description, :string
@@ -26,6 +27,7 @@ defmodule Bmb.Schema do
 
   object :category do
     field :name, non_null(:string)
+    field :display_name, non_null(:string)
     field :parent_id, :string
     field :active, :boolean
     field :id, non_null(:id)

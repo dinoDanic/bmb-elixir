@@ -20,8 +20,18 @@ File.stream!("#{System.user_home()}/projects/bmb/elixir/csv/products.csv")
    }} = row
 
 
+normalized_name =
+    name
+    |> String.normalize(:nfd)
+    |> String.replace(~r/\p{M}/u, "")
+    |> String.replace(~r/[^a-zA-Z0-9\s]/, "")
+    |> String.replace(" ", "-")
+    |> String.downcase()
+
+
   %Product{
-    name: name,
+    name: normalized_name, 
+    display_name: name, 
     price: Decimal.new(price),
     id: String.to_integer(id),
     meta_title: meta_title,
