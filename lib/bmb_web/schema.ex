@@ -62,6 +62,11 @@ defmodule Bmb.Schema do
       arg(:id, non_null(:id))
       resolve(&CategoryResolver.get_category_by_id/3)
     end
+
+    @desc "Get Complete list of categories"
+    field :get_all_categories, list_of(:category) do
+      resolve(&CategoryResolver.get_categories/3)
+    end
   end
 
   mutation do
