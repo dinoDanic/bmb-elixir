@@ -65,7 +65,7 @@ defmodule Bmb.Schema do
 
     @desc "Get Complete list of categories"
     field :get_all_categories, list_of(:category) do
-      resolve(&CategoryResolver.get_categories/3)
+      resolve(&CategoryResolver.get_all_categories/3)
     end
   end
 
