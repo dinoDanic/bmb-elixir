@@ -8,6 +8,7 @@ defmodule Bmb.Category do
     field :display_name, :string
     field :parent_id, :id
     field :active, :boolean, default: true
+    field :image, :string
 
     timestamps()
   end
@@ -16,7 +17,8 @@ defmodule Bmb.Category do
     category
     |> cast(attrs, [
       :name,
-      :parent_id
+      :parent_id,
+      :image
     ])
     |> validate_required([:name, :parent_id])
   end

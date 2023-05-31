@@ -32,6 +32,7 @@ defmodule Bmb.Schema do
     field :active, :boolean
     field :id, non_null(:id)
     field :childrens, list_of(:category), resolve: &CategoryResolver.get_childrens/3
+    # field :total_products_in_category, number, resolver: &CategoryResolver.get_childrens/3
   end
 
   query do

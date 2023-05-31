@@ -45,4 +45,8 @@ defmodule Bmb.CategoryResolver do
         {:ok, category}
     end
   end
+
+  # def total_products_in_category(category, _args, _ctx ) do
+  #    
+  # end
 end
