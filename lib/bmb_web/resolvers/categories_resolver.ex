@@ -14,7 +14,13 @@ defmodule Bmb.CategoryResolver do
   end
 
   def get_all_categories(_parent, _args, _ctx) do
-    Repo.all(Category)
+    query =
+      from(c in Category,
+        where: c.active == true,
+        select: c
+      )
+
+    {:ok, Repo.all(query)}
   end
 
   def get_childrens(category, _args, _ctx) do
