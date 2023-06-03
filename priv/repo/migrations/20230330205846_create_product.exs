@@ -8,7 +8,7 @@ defmodule Bmb.Repo.Migrations.CreateProduct do
       add :name, :string, null: false
       add :display_name, :string, null: false
       add :code, :string, unique: true, null: true
-      add :price, :decimal, null: false
+      add :price, :decimal, precision: 10, scale: 2, null: false
       add :meta_title, :string, null: true
       add :meta_description, :string, size: 1000, null: true
       add :meta_keyword, :string, size: 1000, null: true
