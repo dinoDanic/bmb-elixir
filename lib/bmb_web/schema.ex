@@ -29,10 +29,12 @@ defmodule Bmb.Schema do
   end
 
   object :product do
-    field :id, non_null(:id)
-    field :name, non_null(:string)
-    field :display_name, non_null(:string)
+    field :id, :id
+    field :name, :string
+    field :display_name, :string
     field :price, :decimal
+    #  Koju picku materinu ovo nece ?
+    field :hr_price, :string, resolve: &ProductResolver.hr_price/3
     field :meta_title, :string
     field :meta_description, :string
     field :meta_keyword, :string

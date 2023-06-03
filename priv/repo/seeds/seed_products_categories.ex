@@ -265,21 +265,3 @@ Repo.transaction(fn ->
     Repo.insert!(product_category)
   end)
 end)
-
-# File.stream!("#{System.user_home()}/projects/bmb/elixir/csv/products_categories.csv")
-# |> CSV.decode(headers: true)
-# |> Enum.each(fn row ->
-#   {:ok,
-#    %{
-#      "product_id" => product_id,
-#      "category_id" => category_id,
-#    }} = row
-#
-#
-#   %ProductCategory{
-#     product_id: String.to_integer(product_id),
-#     category_id: String.to_integer(category_id),
-#   }
-#   |> Repo.insert!()
-#
-# end)
