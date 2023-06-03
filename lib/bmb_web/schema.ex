@@ -53,6 +53,12 @@ defmodule Bmb.Schema do
       resolve(&ProductResolver.get_products_by_category_id/3)
     end
 
+    @desc "Get Products by Category name"
+    field :get_products_by_category_name, list_of(:product) do
+      arg(:category_name, non_null(:id))
+      resolve(&ProductResolver.get_products_by_category_name/3)
+    end
+
     @desc "Get categories"
     field :get_categories, list_of(:category) do
       resolve(&CategoryResolver.get_categories/3)

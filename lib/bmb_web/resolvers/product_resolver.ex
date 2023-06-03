@@ -40,4 +40,20 @@ defmodule Bmb.ProductResolver do
     {:ok, products}
   end
 
+def get_products_by_category_name(_root, %{category_name: category_name}, _info) do
+  products =
+    from(p in Product,
+      join: pc in ProductCategory,
+      on: p.id == pc.product_id,
+      join: c in Category,
+      on: c.id == pc.category_id,
+      where: c.name == ^category_name and p.active == true,
+      select: p,
+      distinct: true
+    )
+    |> Repo.all()
+
+  {:ok, products}
+end
+
 end
