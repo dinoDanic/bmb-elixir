@@ -84,5 +84,6 @@ defmodule Bmb.ProductResolver do
 
     description = Repo.one(query)
     {:ok, description}
+    {:error, "error"}
   end
 end
