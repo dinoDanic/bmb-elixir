@@ -19,6 +19,8 @@ defmodule Bmb.Product do
 
     has_one :description, Bmb.Description
 
+    # has_many :product_recommendations, Bmb.ProductRecommendations, foreign_key: :product_id
+
     timestamps()
   end
 

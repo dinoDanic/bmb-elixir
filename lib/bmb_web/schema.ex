@@ -29,7 +29,8 @@ defmodule Bmb.Schema do
     field :height, :string
     field :work_board, :string
     field :active, :boolean
-    field :description, :string, resolve: &ProductResolver.description/3
+    # field :description, :string, resolve: &ProductResolver.description/3
+    field :recommendations, list_of(:product), resolve: &ProductResolver.recommendations/3
   end
 
   object :category do
