@@ -4,19 +4,20 @@ defmodule Bmb.Product do
   import Ecto.Changeset
 
   schema "products" do
-    field :name, :string
-    field :display_name, :string
-    field :price, :decimal
-    field :meta_title, :string
-    field :meta_description, :string
-    field :meta_keyword, :string
-    field :description, :string
-    field :ean, :string
-    field :weight, :integer
-    field :firebox, :string
-    field :height, :string
-    field :work_board, :string
-    field :active, :boolean, default: false
+    field(:name, :string)
+    field(:display_name, :string)
+    field(:price, :decimal)
+    field(:meta_title, :string)
+    field(:meta_description, :string)
+    field(:meta_keyword, :string)
+    field(:ean, :string)
+    field(:weight, :integer)
+    field(:firebox, :string)
+    field(:height, :string)
+    field(:work_board, :string)
+    field(:active, :boolean, default: false)
+
+    has_one :descriptions, Bmb.Description
 
     timestamps()
   end
@@ -29,12 +30,10 @@ defmodule Bmb.Product do
       :meta_title,
       :meta_description,
       :meta_keyword,
-      :description,
       :ean,
       :weight,
       :active
     ])
     |> validate_required([:name, :price, :ean])
   end
-
 end

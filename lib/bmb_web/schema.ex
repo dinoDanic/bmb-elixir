@@ -23,7 +23,7 @@ defmodule Bmb.Schema do
     field :meta_title, :string
     field :meta_description, :string
     field :meta_keyword, :string
-    field :description, :string
+    field :description_id, :string
     field :ean, :string
     field :weight, :integer
     field :firebox, :string

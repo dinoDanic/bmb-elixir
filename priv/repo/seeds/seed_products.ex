@@ -40,7 +40,7 @@ normalized_name =
     meta_title: meta_title,
     meta_description: meta_description,
     meta_keyword: meta_keyword,
-    description: "",
+    # description_id: nil,
     ean: ean,
     weight:
       Decimal.new(weight |> to_string |> String.replace(",", "."))
