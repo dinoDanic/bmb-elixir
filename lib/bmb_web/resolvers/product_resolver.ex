@@ -43,23 +43,22 @@ defmodule Bmb.ProductResolver do
   def price_neto(product, _args, _ctx) do
     price = Decimal.to_float(product.price)
     newPrice = (price / 1.25) |> Float.round(2) |> Float.to_string()
-    formattedPrice = Kernel.inspect(newPrice, limit: :infinity)
+    # formattedPrice = Kernel.inspect(newPrice, limit: :infinity) 
 
-    {:ok, formattedPrice}
+    {:ok, newPrice}
   end
 
   def hrk_price(product, _args, _ctx) do
     price = Decimal.to_float(product.price)
-    newPrice = (price / 7.53450) |> Float.round(2) |> Float.to_string()
+    newPrice = (price * 7.53450) |> Float.round(2) |> Float.to_string()
 
     {:ok, newPrice}
   end
 
   def hrk_price_neto(product, _args, _ctx) do
     price = Decimal.to_float(product.price)
-    newPrice = (price / 7.53450 / 1.25) |> Float.round(2) |> Float.to_string()
+    newPrice = (price * 7.53450 / 1.25) |> Float.round(2) |> Float.to_string()
 
     {:ok, newPrice}
   end
 end
-
