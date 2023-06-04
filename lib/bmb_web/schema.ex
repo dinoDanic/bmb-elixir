@@ -23,13 +23,13 @@ defmodule Bmb.Schema do
     field :meta_title, :string
     field :meta_description, :string
     field :meta_keyword, :string
-    field :description_id, :string
     field :ean, :string
     field :weight, :integer
     field :firebox, :string
     field :height, :string
     field :work_board, :string
     field :active, :boolean
+    field :description, :string, resolve: &ProductResolver.description/3
   end
 
   object :category do

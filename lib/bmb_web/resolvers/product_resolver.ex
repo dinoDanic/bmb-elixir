@@ -1,7 +1,8 @@
 defmodule Bmb.ProductResolver do
-  alias Bmb.{Product, Category, ProductCategory}
+  alias Bmb.{Product, Category, ProductCategory, Description}
   alias Bmb.Repo
   import Ecto.Query
+  import Ecto
 
   def all_products(_root, _args, _info) do
     products =
@@ -60,5 +61,9 @@ defmodule Bmb.ProductResolver do
     newPrice = (price * 7.53450 / 1.25) |> Float.round(2) |> Float.to_string()
 
     {:ok, newPrice}
+  end
+
+  def description(%{description: description}, _, _) do
+    description.content
   end
 end

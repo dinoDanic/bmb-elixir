@@ -17,7 +17,7 @@ defmodule Bmb.Product do
     field(:work_board, :string)
     field(:active, :boolean, default: false)
 
-    has_one :descriptions, Bmb.Description
+    has_one :description, Bmb.Description
 
     timestamps()
   end
