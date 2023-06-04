@@ -2,7 +2,6 @@ defmodule Bmb.ProductResolver do
   alias Bmb.{Product, Category, ProductCategory}
   alias Bmb.Repo
   import Ecto.Query
-  import Decimal
 
   def all_products(_root, _args, _info) do
     products =
@@ -41,17 +40,26 @@ defmodule Bmb.ProductResolver do
     {:ok, products}
   end
 
-  def hr_price(product, _args, _ctx) do
+  def price_neto(product, _args, _ctx) do
     price = Decimal.to_float(product.price)
-    multiplied_price = (price / 7.53450) |> Float.round(2) |> Float.to_string()
+    newPrice = (price / 1.25) |> Float.round(2) |> Float.to_string()
+    formattedPrice = Kernel.inspect(newPrice, limit: :infinity)
 
-    {:ok, multiplied_price}
+    {:ok, formattedPrice}
+  end
+
+  def hrk_price(product, _args, _ctx) do
+    price = Decimal.to_float(product.price)
+    newPrice = (price / 7.53450) |> Float.round(2) |> Float.to_string()
+
+    {:ok, newPrice}
+  end
+
+  def hrk_price_neto(product, _args, _ctx) do
+    price = Decimal.to_float(product.price)
+    newPrice = (price / 7.53450 / 1.25) |> Float.round(2) |> Float.to_string()
+
+    {:ok, newPrice}
   end
 end
 
-# IO.puts(product)
-# IO.puts('PRODUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUU')
-# product.price
-# price = product.price
-# hr_price = price / 7.54073
-# hr_price

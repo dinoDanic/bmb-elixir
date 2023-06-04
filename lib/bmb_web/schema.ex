@@ -6,22 +6,6 @@ defmodule Bmb.Schema do
 
   alias Bmb.CategoryResolver
 
-  scalar :decimal do
-    serialize(&decimal_to_string/1)
-    parse(&string_to_decimal/1)
-  end
-
-  defp decimal_to_string(value) do
-    Decimal.to_string(value)
-  end
-
-  defp string_to_decimal(value) do
-    case Decimal.from_string(value) do
-      {:ok, decimal} -> {:ok, decimal}
-      :error -> {:error, "Invalid decimal"}
-    end
-  end
-
   object :link do
     field :id, non_null(:id)
     field :url, non_null(:string)
@@ -32,9 +16,10 @@ defmodule Bmb.Schema do
     field :id, :id
     field :name, :string
     field :display_name, :string
-    field :price, :decimal
-    #  Koju picku materinu ovo nece ?
-    field :hr_price, :string, resolve: &ProductResolver.hr_price/3
+    field :price, :string
+    field :price_neto, :string, resolve: &ProductResolver.price_neto/3
+    field :hrk_price, :string, resolve: &ProductResolver.hrk_price/3
+    field :hrk_price_neto, :string, resolve: &ProductResolver.hrk_price_neto/3
     field :meta_title, :string
     field :meta_description, :string
     field :meta_keyword, :string
