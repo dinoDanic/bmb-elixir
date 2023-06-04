@@ -15,6 +15,9 @@ defmodule Bmb.Repo.Migrations.CreateProduct do
       add :description, :string, size: 2000, null: true
       add :ean, :string, null: true
       add :weight, :integer, null: true
+      add :firebox, :string, null: true
+      add :height, :string, null: true
+      add :work_board, :string, null: true
       add :active, :boolean, null: false
 
       timestamps()

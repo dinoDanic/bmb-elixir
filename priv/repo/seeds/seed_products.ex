@@ -17,6 +17,9 @@ File.stream!("#{System.user_home()}/projects/bmb/elixir/csv/products.csv")
      "product_ean" => ean,
      "product_weight" => weight,
      "product_publish" => publish_str,
+     "extra_field_5" => firebox,
+     "extra_field_6" => height,
+     "extra_field_7" => work_board
    }} = row
 
 
@@ -43,7 +46,10 @@ normalized_name =
       Decimal.new(weight |> to_string |> String.replace(",", "."))
       |> Decimal.mult(100)
       |> Decimal.to_integer(),
-    active: publish_str == "1",
+    firebox: firebox,
+    height: height,
+    work_board: work_board,
+    active: publish_str == "1"
   }
   |> Repo.insert!()
 

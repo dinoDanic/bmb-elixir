@@ -26,6 +26,9 @@ defmodule Bmb.Schema do
     field :description, :string
     field :ean, :string
     field :weight, :integer
+    field :firebox, :string
+    field :height, :string
+    field :work_board, :string
     field :active, :boolean
   end
 
