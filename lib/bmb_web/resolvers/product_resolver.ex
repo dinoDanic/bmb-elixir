@@ -1,6 +1,6 @@
 defmodule Bmb.ProductResolver do
   alias Bmb.ProductRecommendations
-  alias Bmb.{Product, Category, ProductCategory}
+  alias Bmb.{Product, Category, ProductCategory, Description}
   alias Bmb.Repo
   import Ecto.Query
 
@@ -63,10 +63,6 @@ defmodule Bmb.ProductResolver do
     {:ok, newPrice}
   end
 
-  def description(%{description: description}, _, _) do
-    description.content
-  end
-
   def recommendations(product, _args, _info) do
     query =
       from(r in ProductRecommendations,
@@ -77,5 +73,16 @@ defmodule Bmb.ProductResolver do
       )
 
     {:ok, Repo.all(query)}
+  end
+
+  def description(%{description_id: description_id}, _args, _ctx) do
+    query =
+      from(d in Description,
+        where: d.id == ^description_id,
+        select: d
+      )
+
+    description = Repo.one(query)
+    {:ok, description}
   end
 end

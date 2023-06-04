@@ -29,8 +29,8 @@ defmodule Bmb.Schema do
     field :height, :string
     field :work_board, :string
     field :active, :boolean
-    # field :description, :string, resolve: &ProductResolver.description/3
     field :recommendations, list_of(:product), resolve: &ProductResolver.recommendations/3
+    field :description, :description, resolve: &ProductResolver.description/3
   end
 
   object :category do
@@ -41,6 +41,11 @@ defmodule Bmb.Schema do
     field :id, non_null(:id)
     field :childrens, list_of(:category), resolve: &CategoryResolver.get_childrens/3
     # field :total_products_in_category, number, resolver: &CategoryResolver.get_childrens/3
+  end
+
+  object :description do
+    field :id, :id
+    field :content, :string
   end
 
   query do

@@ -5,7 +5,6 @@ defmodule Bmb.Description do
   schema "descriptions" do
     field :content, :string
 
-    belongs_to :product, Bmb.Product
     timestamps()
   end
 

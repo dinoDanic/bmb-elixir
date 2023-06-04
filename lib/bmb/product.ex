@@ -15,11 +15,8 @@ defmodule Bmb.Product do
     field(:firebox, :string)
     field(:height, :string)
     field(:work_board, :string)
+    field(:description_id, :integer)
     field(:active, :boolean, default: false)
-
-    has_one :description, Bmb.Description
-
-    # has_many :product_recommendations, Bmb.ProductRecommendations, foreign_key: :product_id
 
     timestamps()
   end
