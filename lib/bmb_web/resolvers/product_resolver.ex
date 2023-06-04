@@ -83,7 +83,10 @@ defmodule Bmb.ProductResolver do
       )
 
     description = Repo.one(query)
-    {:ok, description}
-    {:error, "error"}
+
+    case description do
+      nil -> nil
+      _ -> {:ok, description}
+    end
   end
 end
