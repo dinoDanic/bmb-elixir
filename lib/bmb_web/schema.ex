@@ -1,7 +1,6 @@
 defmodule Bmb.Schema do
   use Absinthe.Schema
 
-  alias Bmb.NewsResolver
   alias Bmb.ProductResolver
 
   alias Bmb.CategoryResolver
@@ -84,12 +83,11 @@ defmodule Bmb.Schema do
   end
 
   mutation do
-    @desc "Create a new link"
-    field :create_link, :link do
-      arg(:url, non_null(:string))
-      arg(:description, non_null(:string))
-
-      resolve(&NewsResolver.create_link/3)
+    field :edit_product, :product do
+      arg(:id, non_null(:id))
+      arg(:name, :string)
+      arg(:price, :string)
+      resolve(&ProductResolver.edit_product/3)
     end
   end
 end

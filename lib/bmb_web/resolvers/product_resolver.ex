@@ -1,6 +1,7 @@
 defmodule Bmb.ProductResolver do
   alias Bmb.ProductRecommendations
   alias Bmb.{Product, Category, ProductCategory, Description}
+  import Ecto.Changeset
   alias Bmb.Repo
   import Ecto.Query
 
@@ -88,5 +89,30 @@ defmodule Bmb.ProductResolver do
       nil -> nil
       _ -> {:ok, description}
     end
+  end
+
+  def update_product(product, name) do
+    product
+    |> Ecto.Changeset.change(name)
+
+    # |> Ecto.Changeset.cast_assoc(:recommendations)
+  end
+
+  def save_product(product) do
+    case Repo.update(product) do
+      {:ok, updated_product} ->
+        updated_product
+
+      {:error, changeset} ->
+        {:error, changeset}
+    end
+  end
+
+  def edit_product(_parent, %{id: id, name: name, price: price}, _info) do
+    IO.puts("product")
+
+    Repo.get(Product, id)
+    |> change(%{name: name, price: Decimal.new(price)})
+    |> Repo.update()
   end
 end
