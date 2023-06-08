@@ -108,11 +108,10 @@ defmodule Bmb.ProductResolver do
     end
   end
 
-  def edit_product(_parent, %{id: id, name: name, price: price}, _info) do
-    IO.puts("product")
-
+  def edit_product(_parent, %{id: id, input: input}, _info) do
     Repo.get(Product, id)
-    |> change(%{name: name, price: Decimal.new(price)})
+    |> Product.changeset(input)
+    |> change(input)
     |> Repo.update()
   end
 end

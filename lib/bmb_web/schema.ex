@@ -47,6 +47,11 @@ defmodule Bmb.Schema do
     field :content, :string
   end
 
+  input_object :edit_product_input do
+    field :name, :string
+    field :display_name, :string
+  end
+
   query do
     @desc "Get Product by ID"
     field :get_product_by_id, :product do
@@ -85,8 +90,7 @@ defmodule Bmb.Schema do
   mutation do
     field :edit_product, :product do
       arg(:id, non_null(:id))
-      arg(:name, :string)
-      arg(:price, :string)
+      arg(:input, :edit_product_input)
       resolve(&ProductResolver.edit_product/3)
     end
   end
