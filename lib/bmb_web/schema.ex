@@ -2,54 +2,72 @@ defmodule Bmb.Schema do
   use Absinthe.Schema
 
   alias Bmb.ProductResolver
+  alias Graphql.Mutations.CreateSession
 
   alias Bmb.CategoryResolver
 
+  object :user do
+    field(:id, :id)
+    field(:name, :string)
+    field(:email, :string)
+  end
+
   object :link do
-    field :id, non_null(:id)
-    field :url, non_null(:string)
-    field :description, non_null(:string)
+    field(:id, non_null(:id))
+    field(:url, non_null(:string))
+    field(:description, non_null(:string))
   end
 
   object :product do
-    field :id, :id
-    field :name, :string
-    field :display_name, :string
-    field :price, :string
-    field :price_neto, :string, resolve: &ProductResolver.price_neto/3
-    field :hrk_price, :string, resolve: &ProductResolver.hrk_price/3
-    field :hrk_price_neto, :string, resolve: &ProductResolver.hrk_price_neto/3
-    field :meta_title, :string
-    field :meta_description, :string
-    field :meta_keyword, :string
-    field :ean, :string
-    field :weight, :integer
-    field :firebox, :string
-    field :height, :string
-    field :work_board, :string
-    field :active, :boolean
-    field :recommendations, list_of(:product), resolve: &ProductResolver.recommendations/3
-    field :description, :description, resolve: &ProductResolver.description/3
+    field(:id, :id)
+    field(:name, :string)
+    field(:display_name, :string)
+    field(:price, :string)
+    field(:price_neto, :string, resolve: &ProductResolver.price_neto/3)
+    field(:hrk_price, :string, resolve: &ProductResolver.hrk_price/3)
+    field(:hrk_price_neto, :string, resolve: &ProductResolver.hrk_price_neto/3)
+    field(:meta_title, :string)
+    field(:meta_description, :string)
+    field(:meta_keyword, :string)
+    field(:ean, :string)
+    field(:weight, :integer)
+    field(:firebox, :string)
+    field(:height, :string)
+    field(:work_board, :string)
+    field(:active, :boolean)
+    field(:recommendations, list_of(:product), resolve: &ProductResolver.recommendations/3)
+    field(:description, :description, resolve: &ProductResolver.description/3)
   end
 
   object :category do
-    field :name, non_null(:string)
-    field :display_name, non_null(:string)
-    field :parent_id, :string
-    field :active, :boolean
-    field :id, non_null(:id)
-    field :childrens, list_of(:category), resolve: &CategoryResolver.get_childrens/3
+    field(:name, non_null(:string))
+    field(:display_name, non_null(:string))
+    field(:parent_id, :string)
+    field(:active, :boolean)
+    field(:id, non_null(:id))
+    field(:childrens, list_of(:category), resolve: &CategoryResolver.get_childrens/3)
     # field :total_products_in_category, number, resolver: &CategoryResolver.get_childrens/3
   end
 
   object :description do
-    field :id, :id
-    field :content, :string
+    field(:id, :id)
+    field(:content, :string)
+  end
+
+  object :session do
+    # field(:account, :account)
+    field(:token, :string)
   end
 
   input_object :edit_product_input do
-    field :name, :string
-    field :display_name, :string
+    field(:name, :string)
+    field(:display_name, :string)
+  end
+
+  input_object :create_session_input do
+    field(:email, :string)
+    field(:username, :string)
+    field(:password, non_null(:string))
   end
 
   query do
@@ -92,6 +110,11 @@ defmodule Bmb.Schema do
       arg(:id, non_null(:id))
       arg(:input, :edit_product_input)
       resolve(&ProductResolver.edit_product/3)
+    end
+
+    field :create_session, :session do
+      arg(:input, :create_session_input)
+      resolve(&CreateSession.resolve/3)
     end
   end
 end

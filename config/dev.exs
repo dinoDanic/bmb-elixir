@@ -26,8 +26,6 @@ config :bmb, BmbWeb.Endpoint,
   secret_key_base: "uvwuQObU9x/xGbok+rb2N2tqLpeCGqckq0SYH1vcFJNiM3gymmSYYX2GDCqCjPSG",
   watchers: []
 
-config :arc,
-  storage: Arc.Storage.Local
 
 # ## SSL Support
 #
