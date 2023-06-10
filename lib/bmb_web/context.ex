@@ -1,4 +1,4 @@
-defmodule Bmb.Context do
+defmodule BmbWeb.Context do
   @behaviour Plug
 
   import Plug.Conn

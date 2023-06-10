@@ -2,7 +2,7 @@ defmodule BmbWeb.Router do
   use BmbWeb, :router
 
   pipeline :graphql do
-    plug Bmb.Context
+    plug BmbWeb.Context
   end
 
   # pipeline :api do
@@ -14,7 +14,7 @@ defmodule BmbWeb.Router do
 
     forward("/graphiql", Absinthe.Plug.GraphiQL,
       schema: Bmb.Schema,
-      interface: :playground,
+      interface: :playground
       # context: %{pubsub: BmbWeb.Endpoint}
     )
 

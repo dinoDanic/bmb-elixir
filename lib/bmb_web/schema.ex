@@ -1,5 +1,6 @@
 defmodule Bmb.Schema do
   use Absinthe.Schema
+  alias Graphql.Queries.{CurrentUser}
 
   alias Bmb.ProductResolver
   alias Graphql.Mutations.CreateSession
@@ -59,6 +60,13 @@ defmodule Bmb.Schema do
     field(:token, :string)
   end
 
+  object :account do
+    field(:email, :string)
+    field(:username, :string)
+    field(:first_name, :string)
+    field(:last_name, :string)
+  end
+
   input_object :edit_product_input do
     field(:name, :string)
     field(:display_name, :string)
@@ -71,6 +79,10 @@ defmodule Bmb.Schema do
   end
 
   query do
+    field :me, :account do
+      resolve(&CurrentUser.call/3)
+    end
+
     @desc "Get Product by ID"
     field :get_product_by_id, :product do
       arg(:id, non_null(:id))

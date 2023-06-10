@@ -57,6 +57,20 @@ defmodule BmbWeb do
     end
   end
 
+  @doc false
+  def child_spec(_arg) do
+    children = [
+      BmbWeb.Endpoint
+      # {Absinthe.Subscription, KodiStragaWeb.Endpoint}
+    ]
+
+    %{
+      id: __MODULE__,
+      type: :supervisor,
+      start: {Supervisor, :start_link, [children, [strategy: :one_for_one]]}
+    }
+  end
+
   @doc """
   When used, dispatch to the appropriate controller/view/etc.
   """
