@@ -1,5 +1,6 @@
-defmodule Bmb.Schema do
+defmodule BmbWeb.Schema do
   use Absinthe.Schema
+  use BmbWeb.Auth.CustomMiddleware
   alias Graphql.Queries.{CurrentUser}
 
   alias Bmb.ProductResolver
@@ -61,6 +62,7 @@ defmodule Bmb.Schema do
   end
 
   object :account do
+    field(:id, :id)
     field(:email, :string)
     field(:username, :string)
     field(:first_name, :string)
