@@ -91,6 +91,11 @@ defmodule BmbWeb.Schema do
       resolve(&ProductResolver.get_product_by_id/3)
     end
 
+    @desc "Get all active products"
+    field :all_active_products, list_of(:product) do
+      resolve(&ProductResolver.all_active_products/3)
+    end
+
     @desc "Get all products"
     field :all_products, list_of(:product) do
       resolve(&ProductResolver.all_products/3)

@@ -8,6 +8,14 @@ defmodule Bmb.ProductResolver do
   def all_products(_root, _args, _info) do
     products =
       Product
+      |> Repo.all()
+
+    {:ok, products}
+  end
+
+  def all_active_products(_root, _args, _info) do
+    products =
+      Product
       |> where(active: true)
       |> Repo.all()
 

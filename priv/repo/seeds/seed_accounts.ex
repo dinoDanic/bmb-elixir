@@ -3,10 +3,10 @@ alias Schemas.Account
 
 %Account{}
 |> Account.changeset(%{
-  first_name: "Kodius",
-  last_name: "Test",
+  first_name: "BMB",
+  last_name: "Admin",
   password: "Ruda,actv1!",
-  username: "kodius_test",
-  email: "user@kodius.com"
+  username: "bmb_admin",
+  email: "dino.danic@gmail.com"
 })
 |> Repo.insert()
