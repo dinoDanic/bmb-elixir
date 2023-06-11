@@ -118,7 +118,6 @@ defmodule Bmb.ProductResolver do
 
   def edit_product(_parent, %{id: id, input: input}, _info) do
     Repo.get(Product, id)
-    |> Product.changeset(input)
     |> change(input)
     |> Repo.update()
   end
