@@ -72,6 +72,7 @@ defmodule BmbWeb.Schema do
   input_object :edit_product_input do
     field(:name, :string)
     field(:display_name, :string)
+    field(:active, :boolean)
   end
 
   input_object :create_session_input do
