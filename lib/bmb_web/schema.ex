@@ -73,6 +73,7 @@ defmodule BmbWeb.Schema do
     field(:name, :string)
     field(:display_name, :string)
     field(:active, :boolean)
+    field(:price, :string)
   end
 
   input_object :create_session_input do

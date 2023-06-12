@@ -8,6 +8,7 @@ defmodule Bmb.ProductResolver do
   def all_products(_root, _args, _info) do
     products =
       Product
+      |> order_by([p], p.id)
       |> Repo.all()
 
     {:ok, products}
