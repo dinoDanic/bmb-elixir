@@ -1,12 +1,27 @@
 defmodule BmbWeb.Schema do
   use Absinthe.Schema
   use BmbWeb.Auth.CustomMiddleware
+  use Absinthe.Relay.Schema, :modern
   alias Graphql.Queries.{CurrentUser}
 
   alias Bmb.ProductResolver
   alias Graphql.Mutations.CreateSession
 
   alias Bmb.CategoryResolver
+
+  import_types(Graphql.Types.Product)
+
+  connection(node_type: :product)
+
+  node interface do
+    resolve_type(fn
+      %Bmb.Product{}, _ ->
+        :product
+
+      _, _ ->
+        nil
+    end)
+  end
 
   object :user do
     field(:id, :id)
@@ -18,27 +33,6 @@ defmodule BmbWeb.Schema do
     field(:id, non_null(:id))
     field(:url, non_null(:string))
     field(:description, non_null(:string))
-  end
-
-  object :product do
-    field(:id, :id)
-    field(:name, :string)
-    field(:display_name, :string)
-    field(:price, :string)
-    field(:price_neto, :string, resolve: &ProductResolver.price_neto/3)
-    field(:hrk_price, :string, resolve: &ProductResolver.hrk_price/3)
-    field(:hrk_price_neto, :string, resolve: &ProductResolver.hrk_price_neto/3)
-    field(:meta_title, :string)
-    field(:meta_description, :string)
-    field(:meta_keyword, :string)
-    field(:ean, :string)
-    field(:weight, :integer)
-    field(:firebox, :string)
-    field(:height, :string)
-    field(:work_board, :string)
-    field(:active, :boolean)
-    field(:recommendations, list_of(:product), resolve: &ProductResolver.recommendations/3)
-    field(:description, :description, resolve: &ProductResolver.description/3)
   end
 
   object :category do
@@ -83,6 +77,16 @@ defmodule BmbWeb.Schema do
   end
 
   query do
+    node field do
+      resolve(fn
+        %{type: :product, id: local_id}, _ ->
+          {:ok, Bmb.Repo.get(Bmb.Product, local_id)}
+
+        _, _ ->
+          {:error, "Unknown node"}
+      end)
+    end
+
     field :me, :account do
       resolve(&CurrentUser.call/3)
     end
@@ -99,7 +103,7 @@ defmodule BmbWeb.Schema do
     end
 
     @desc "Get all products"
-    field :all_products, list_of(:product) do
+    connection field(:all_products, node_type: :product) do
       resolve(&ProductResolver.all_products/3)
     end
 

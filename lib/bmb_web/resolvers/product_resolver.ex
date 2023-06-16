@@ -1,17 +1,19 @@
 defmodule Bmb.ProductResolver do
   alias Bmb.ProductRecommendations
   alias Bmb.{Product, Category, ProductCategory, Description}
+  alias Absinthe.Relay.Connection
   import Ecto.Changeset
   alias Bmb.Repo
   import Ecto.Query
 
-  def all_products(_root, _args, _info) do
+  def all_products(_root, args, _info) do
     products =
       Product
       |> order_by([p], p.id)
-      |> Repo.all()
-
-    {:ok, products}
+      |> Connection.from_query(
+        &Repo.all/1,
+        default_pagination(args)
+      )
   end
 
   def all_active_products(_root, _args, _info) do
@@ -117,9 +119,40 @@ defmodule Bmb.ProductResolver do
     end
   end
 
+  # TODO move decimal to scalars *.API.Graphql.Scalars.Decimal
+  # defmodule *.API.Graphql.Scalars.Decimal do
+  #   use Absinthe.Schema.Notation
+
+  #   scalar :decimal do
+  #     parse(fn
+  #       %{value: value}, _ ->
+  #         Decimal.parse(value)
+
+  #       # Temporary fix when decimal field isn't sent from the client.
+  #       # TODO: Fix to skip the field if field isn't sent.
+  #       %Absinthe.Blueprint.Input.Null{}, _ ->
+  #         {:ok, Decimal.new(0)}
+
+  #       _, _ ->
+  #         :error
+  #     end)
+
+  #     serialize(&to_string/1)
+  #   end
+  # end
+
   def edit_product(_parent, %{id: id, input: input}, _info) do
+    input =
+      if not is_nil(Map.get(input, :price)),
+        do: Map.put(input, :price, Decimal.new(input[:price])),
+        else: input
+
     Repo.get(Product, id)
     |> change(input)
     |> Repo.update()
   end
+
+  defp default_pagination(%{:last => _} = data), do: data
+
+  defp default_pagination(data), do: Map.put_new(data, :first, 1000)
 end
