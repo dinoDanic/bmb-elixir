@@ -2,10 +2,12 @@ defmodule Graphql.Types.Product do
   use Absinthe.Schema.Notation
   use Absinthe.Relay.Schema.Notation, :modern
 
+  import_types(BmbWeb.Graphql.Scalars.Decimal)
+
   node object(:product) do
     field(:name, :string)
     field(:display_name, :string)
-    field(:price, :string)
+    field(:price, :decimal)
     field(:price_neto, :string, resolve: &ProductResolver.price_neto/3)
     field(:hrk_price, :string, resolve: &ProductResolver.hrk_price/3)
     field(:hrk_price_neto, :string, resolve: &ProductResolver.hrk_price_neto/3)

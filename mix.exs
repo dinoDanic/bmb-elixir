@@ -66,9 +66,9 @@ defmodule Bmb.MixProject do
       setup: [
         "deps.get",
         "ecto.setup",
-        "run priv/repo/seeds/seed_products.ex",
-        "run priv/repo/seeds/seed_categories.ex",
-        "run priv/repo/seeds/seed_products_categories.ex"
+        # "run priv/repo/seeds/seed_products.ex",
+        # "run priv/repo/seeds/seed_categories.ex",
+        # "run priv/repo/seeds/seed_products_categories.ex"
       ],
       "ecto.setup": ["ecto.create", "ecto.migrate", "run priv/repo/seeds.exs"],
       "ecto.reset": ["ecto.drop", "ecto.setup"],
