@@ -18,6 +18,8 @@ defmodule Bmb.Product do
     field(:description_id, :integer)
     field(:active, :boolean, default: false)
 
+    belongs_to(:category, Bmb.Category)
+
     timestamps()
   end
 

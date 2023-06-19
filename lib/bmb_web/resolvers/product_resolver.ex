@@ -5,15 +5,17 @@ defmodule Bmb.ProductResolver do
   import Ecto.Changeset
   alias Bmb.Repo
   import Ecto.Query
+  alias Bmb.ProductCategory
 
-  def all_products(_root, args, _info) do
+  def all_products(_root, %{category_id: category_id} = args, _info) do
+    # TODO: if no category id throws and error
     products =
-      Product
-      |> order_by([p], p.id)
-      |> Connection.from_query(
-        &Repo.all/1,
-        default_pagination(args)
+      from(p in Product,
+        join: c in assoc(p, :category),
+        where: c.id == ^category_id,
+        order_by: p.id
       )
+      |> Connection.from_query(&Repo.all/1, default_pagination(args))
   end
 
   def all_active_products(_root, _args, _info) do

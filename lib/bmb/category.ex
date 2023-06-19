@@ -10,6 +10,7 @@ defmodule Bmb.Category do
     field :active, :boolean, default: true
     field :image, :string
 
+    has_many(:products, Bmb.Product)
     timestamps()
   end
 

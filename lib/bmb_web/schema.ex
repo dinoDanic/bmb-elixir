@@ -104,6 +104,7 @@ defmodule BmbWeb.Schema do
 
     @desc "Get all products"
     connection field(:all_products, node_type: :product) do
+      arg(:category_id, :string)
       resolve(&ProductResolver.all_products/3)
     end
 
