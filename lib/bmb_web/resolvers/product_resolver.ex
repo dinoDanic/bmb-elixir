@@ -10,14 +10,19 @@ defmodule Bmb.ProductResolver do
   def all_products(_root, args, _info) do
     query =
       from(p in Product,
-        join: c in assoc(p, :category),
         order_by: p.id
       )
 
     query =
       case Map.get(args, :category_ids) do
-        nil -> query
-        category_ids -> from q in query, where: q.category_id in ^category_ids
+        nil ->
+          query
+
+        category_ids ->
+          from q in query,
+            join: pc in assoc(q, :product_categories),
+            join: c in assoc(pc, :category),
+            where: c.id in ^category_ids
       end
 
     products = query |> Connection.from_query(&Repo.all/1, default_pagination(args))

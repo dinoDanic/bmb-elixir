@@ -1,3 +1,5 @@
+# DEPRECATED
+
 alias Ecto.Repo
 alias Bmb.ProductCategory
 alias Bmb.Repo
