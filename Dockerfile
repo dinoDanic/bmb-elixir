@@ -4,6 +4,9 @@ FROM elixir:latest
 # Set the working directory in the container
 WORKDIR /app
 
+# Generate private key
+RUN openssl genrsa -out private_key.pem 4096
+
 # Copy the application files into the container
 COPY . .
 
