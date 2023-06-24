@@ -36,11 +36,11 @@ defmodule BmbWeb.Schema do
   end
 
   object :category do
-    field(:name, non_null(:string))
-    field(:display_name, non_null(:string))
+    field(:name, :string)
+    field(:display_name, :string)
     field(:parent_id, :string)
     field(:active, :boolean)
-    field(:id, non_null(:id))
+    field(:id, :id)
     field(:childrens, list_of(:category), resolve: &CategoryResolver.get_childrens/3)
   end
 
@@ -67,6 +67,11 @@ defmodule BmbWeb.Schema do
     field(:display_name, :string)
     field(:active, :boolean)
     field(:price, :string)
+    field(:weight, :string)
+    field(:height, :string)
+    field(:firebox, :string)
+    field(:work_board, :string)
+    field(:ean, :string)
   end
 
   input_object :create_session_input do
@@ -104,6 +109,7 @@ defmodule BmbWeb.Schema do
     @desc "Get all products"
     connection field(:all_products, node_type: :product) do
       arg(:category_ids, list_of(:string))
+      arg(:name, :string)
       resolve(&ProductResolver.all_products/3)
     end
 

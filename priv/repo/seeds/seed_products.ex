@@ -22,8 +22,7 @@ File.stream!("#{System.user_home()}/projects/bmb/bmb-elixir/csv/products.csv")
      "extra_field_7" => work_board
    }} = row
 
-
-normalized_name =
+  normalized_name =
     name
     |> String.normalize(:nfd)
     |> String.replace(~r/\p{M}/u, "")
@@ -31,21 +30,27 @@ normalized_name =
     |> String.replace(" ", "-")
     |> String.downcase()
 
+  price_float = case String.to_float(price) do
+    float when is_float(float) -> float
+    _ -> 0.0
+  end
+
+  price_string = Float.to_string(price_float)
+  price_decimal = Decimal.new(price_string)
+  tax_percentage = 25
+  tax_decimal = Decimal.new(tax_percentage)
+  price_without_tax = Decimal.mult(price_decimal, Decimal.div(100, Decimal.add(100, tax_decimal)))
 
   %Product{
-    name: normalized_name, 
-    display_name: name, 
-    price: Decimal.new(price),
+    name: normalized_name,
+    display_name: name,
+    price: price_without_tax,
     id: String.to_integer(id),
     meta_title: meta_title,
     meta_description: meta_description,
     meta_keyword: meta_keyword,
-    # description_id: nil,
     ean: ean,
-    weight:
-      Decimal.new(weight |> to_string |> String.replace(",", "."))
-      |> Decimal.mult(100)
-      |> Decimal.to_integer(),
+    weight: weight,
     firebox: firebox,
     height: height,
     work_board: work_board,

@@ -11,7 +11,7 @@ defmodule Bmb.Product do
     field(:meta_description, :string)
     field(:meta_keyword, :string)
     field(:ean, :string)
-    field(:weight, :integer)
+    field(:weight, :string)
     field(:firebox, :string)
     field(:height, :string)
     field(:work_board, :string)

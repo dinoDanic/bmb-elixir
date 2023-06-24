@@ -13,7 +13,7 @@ defmodule Bmb.Repo.Migrations.CreateProduct do
       add :meta_description, :string, size: 1000, null: true
       add :meta_keyword, :string, size: 1000, null: true
       add :ean, :string, null: true
-      add :weight, :integer, null: true
+      add :weight, :string
       add :firebox, :string, null: true
       add :height, :string, null: true
       add :work_board, :string, null: true

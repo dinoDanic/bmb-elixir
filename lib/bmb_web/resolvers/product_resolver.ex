@@ -25,7 +25,17 @@ defmodule Bmb.ProductResolver do
             where: c.id in ^category_ids
       end
 
-    products = query |> Connection.from_query(&Repo.all/1, default_pagination(args))
+    query =
+      case Map.get(args, :name) do
+        nil ->
+          query
+
+        name ->
+          from q in query,
+            where: ilike(q.display_name, ^"%#{name}%")
+      end
+
+    query |> Connection.from_query(&Repo.all/1, default_pagination(args))
   end
 
   def all_active_products(_root, _args, _info) do
@@ -38,6 +48,7 @@ defmodule Bmb.ProductResolver do
   end
 
   def get_product_by_id(_root, %{id: id}, _info) do
+    # decoded_id = Base.decode64!(id)
     product = Repo.get(Product, id)
 
     case product do
@@ -65,12 +76,14 @@ defmodule Bmb.ProductResolver do
     {:ok, products}
   end
 
-  def price_neto(product, _args, _ctx) do
-    price = Decimal.to_float(product.price)
-    newPrice = (price / 1.25) |> Float.round(2) |> Float.to_string()
-    # formattedPrice = Kernel.inspect(newPrice, limit: :infinity) 
+  def price_with_tax(product, _args, _ctx) do
+    tax_percentage = 25
 
-    {:ok, newPrice}
+    price_with_tax =
+      Decimal.mult(product.price, Decimal.add(100, Decimal.new(tax_percentage)))
+      |> Decimal.div(100)
+
+    {:ok, price_with_tax}
   end
 
   def hrk_price(product, _args, _ctx) do
@@ -162,6 +175,21 @@ defmodule Bmb.ProductResolver do
     Repo.get(Product, id)
     |> change(input)
     |> Repo.update()
+  end
+
+  def category(product, _, _) do
+    category =
+      from(p in Bmb.Product,
+        join: pc in Bmb.ProductCategory,
+        on: p.id == pc.product_id,
+        join: c in Bmb.Category,
+        on: c.id == pc.category_id,
+        where: p.id == ^product.id,
+        select: c
+      )
+      |> Bmb.Repo.one()
+
+    {:ok, category}
   end
 
   defp default_pagination(%{:last => _} = data), do: data

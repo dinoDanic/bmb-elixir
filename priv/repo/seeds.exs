@@ -1,15 +1,15 @@
-# Script for populating the database. You can run it as:
-#
-#     mix run priv/repo/seeds.exs
-#
-# Inside the script, you can read and write to any of your
-# repositories directly:
-#
-#     Bmb.Repo.insert!(%Bmb.SomeSchema{})
-#
-# We recommend using the bang functions (`insert!`, `update!`
-# and so on) as they will fail if something goes wrong.
+# seeds.exs
 
+# Define a list of seed files to be executed in order
+seed_files = [
+  "priv/repo/seeds/seed_products.ex",
+  "priv/repo/seeds/seed_categories.ex",
+  "priv/repo/seeds/seed_products_categories.ex",
+  "priv/repo/seeds/seed_accounts.ex"
+]
 
-  # %Link{url: "http://graphql.org/", description: "The Best Query Language"} |> Repo.insert!()
-  # %Link{url: "http://dev.apollodata.com/", description: "Awesome GraphQL Client"} |> Repo.insert!()
+# Iterate over the seed files and run each one
+Enum.each(seed_files, fn seed_file ->
+  IO.puts("Running seed file: #{seed_file}")
+  Code.eval_file(seed_file)
+end)
