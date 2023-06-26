@@ -2,13 +2,13 @@ defmodule BmbWeb.Schema do
   use Absinthe.Schema
   use BmbWeb.Auth.CustomMiddleware
   use Absinthe.Relay.Schema, :modern
-  alias Graphql.Queries.{CurrentUser}
 
+  alias Graphql.Queries.{CurrentUser}
   alias Bmb.ProductResolver
   alias Graphql.Mutations.CreateSession
-
   alias Bmb.CategoryResolver
 
+  import_types(Absinthe.Plug.Types)
   import_types(Graphql.Types.Product)
 
   connection(node_type: :product)
@@ -146,6 +146,25 @@ defmodule BmbWeb.Schema do
     field :create_session, :session do
       arg(:input, :create_session_input)
       resolve(&CreateSession.resolve/3)
+    end
+
+    field :upload_file, :string do
+      arg(:users, non_null(:upload))
+      IO.puts("UNUTRAAAAAAAAAAAAAAAAAAa")
+
+      resolve(fn %{users: users}, _ ->
+        IO.puts(users)
+        # `users` is a `%Plug.Upload{}` struct representing the uploaded file.
+        # You can handle the file upload logic here, such as storing the file or processing it.
+        # Example:
+        # case File.write("path/to/save/#{users.filename}", users.path) do
+        #   :ok ->
+        #     {:ok, "File uploaded successfully"}
+        #
+        #   _ ->
+        #     {:error, "Failed to upload file"}
+        # end
+      end)
     end
   end
 end

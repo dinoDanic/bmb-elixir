@@ -192,6 +192,27 @@ defmodule Bmb.ProductResolver do
     {:ok, category}
   end
 
+  def image_url(product, _, _) do
+    image =
+      from(p in Bmb.Product,
+        join: pi in Bmb.ProductImages,
+        on: p.id == pi.product_id,
+        join: i in Bmb.Image,
+        on: i.id == pi.image_id,
+        where: p.id == ^product.id and pi.is_main == true,
+        select: i
+      )
+      |> Bmb.Repo.one()
+
+    case image do
+      nil ->
+        {:ok, nil}
+
+      _ ->
+        {:ok, image.url}
+    end
+  end
+
   defp default_pagination(%{:last => _} = data), do: data
 
   defp default_pagination(data), do: Map.put_new(data, :first, 1000)

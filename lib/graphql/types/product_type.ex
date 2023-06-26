@@ -23,7 +23,7 @@ defmodule Graphql.Types.Product do
     field(:active, :boolean)
     field(:recommendations, list_of(:product), resolve: &Bmb.ProductResolver.recommendations/3)
     field(:description, :description, resolve: &Bmb.ProductResolver.description/3)
-    # Add this line
     field(:category, :category, resolve: &Bmb.ProductResolver.category/3)
+    field(:image_url, :string, resolve: &Bmb.ProductResolver.image_url/3)
   end
 end

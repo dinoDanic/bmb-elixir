@@ -21,6 +21,9 @@ defmodule Bmb.Product do
     has_many(:product_categories, Bmb.ProductCategory)
     has_many(:categories, through: [:product_categories, :category])
 
+    has_many(:product_images, Bmb.ProductImages)
+    has_many(:images, through: [:product_images, :image])
+
     timestamps()
   end
 
