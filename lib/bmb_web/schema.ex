@@ -143,28 +143,16 @@ defmodule BmbWeb.Schema do
       resolve(&ProductResolver.edit_product/3)
     end
 
+
     field :create_session, :session do
       arg(:input, :create_session_input)
       resolve(&CreateSession.resolve/3)
     end
 
-    field :upload_file, :string do
-      arg(:users, non_null(:upload))
-      IO.puts("UNUTRAAAAAAAAAAAAAAAAAAa")
-
-      resolve(fn %{users: users}, _ ->
-        IO.puts(users)
-        # `users` is a `%Plug.Upload{}` struct representing the uploaded file.
-        # You can handle the file upload logic here, such as storing the file or processing it.
-        # Example:
-        # case File.write("path/to/save/#{users.filename}", users.path) do
-        #   :ok ->
-        #     {:ok, "File uploaded successfully"}
-        #
-        #   _ ->
-        #     {:error, "Failed to upload file"}
-        # end
-      end)
+    field :add_product_image_url, :string do
+      arg(:product_id, non_null(:string))
+      arg(:image_url, non_null(:string))
+      resolve(&ProductResolver.add_product_image_url/3)
     end
   end
 end

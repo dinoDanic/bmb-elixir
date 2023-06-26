@@ -1,4 +1,6 @@
 defmodule Bmb.ProductResolver do
+  alias Bmb.ProductImages
+  alias Bmb.Image
   alias Bmb.ProductRecommendations
   alias Bmb.{Product, Category, ProductCategory, Description}
   alias Absinthe.Relay.Connection
@@ -19,10 +21,11 @@ defmodule Bmb.ProductResolver do
           query
 
         category_ids ->
-          from q in query,
+          from(q in query,
             join: pc in assoc(q, :product_categories),
             join: c in assoc(pc, :category),
             where: c.id in ^category_ids
+          )
       end
 
     query =
@@ -31,8 +34,9 @@ defmodule Bmb.ProductResolver do
           query
 
         name ->
-          from q in query,
+          from(q in query,
             where: ilike(q.display_name, ^"%#{name}%")
+          )
       end
 
     query |> Connection.from_query(&Repo.all/1, default_pagination(args))
@@ -211,6 +215,38 @@ defmodule Bmb.ProductResolver do
       _ ->
         {:ok, image.url}
     end
+  end
+
+  def add_product_image_url(_parent, %{product_id: product_id, image_url: image_url}, _info) do
+    image = %Image{url: image_url}
+
+    case Repo.insert(image) do
+      {:ok, inserted_image} ->
+        product_image = %ProductImages{
+          product_id: String.to_integer(product_id),
+          image_id: inserted_image.id
+        }
+
+        case Repo.insert(product_image) do
+          {:ok, _} ->
+            {:ok, "image added"}
+
+          {:error, _} ->
+            {:error, "Something wrong"}
+        end
+
+      {:error, _} ->
+        {:error, "Something wrong"}
+    end
+
+    # |> Repo.insert()
+    # |> Repo.insert(%ProductImages{
+    #   product_id: product_id ,
+    #   image_id: ,
+    #   })
+    #
+    #
+    # |> {:ok, "ok"}
   end
 
   defp default_pagination(%{:last => _} = data), do: data
