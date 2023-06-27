@@ -204,7 +204,7 @@ defmodule Bmb.ProductResolver do
         join: i in Bmb.Image,
         on: i.id == pi.image_id,
         where: p.id == ^product.id,
-        select: %{id: i.id, url: i.url, is_main: pi.is_main }
+        select: %{id: i.id, url: i.url, is_main: pi.is_main}
       )
       |> Bmb.Repo.all()
 
@@ -292,6 +292,23 @@ defmodule Bmb.ProductResolver do
             {:error, "Failed to remove product image"}
         end
     end
+  end
+
+  def set_main_image(_parent, %{product_id: product_id, image_id: image_id}, _info) do
+    # Reset is_main for all images of the product to false
+
+    from(p in Bmb.ProductImages,
+      where: p.product_id == ^product_id,
+      update: [set: [is_main: false]]
+    )
+    |> Bmb.Repo.update_all([])
+
+    from(p in Bmb.ProductImages,
+      where: p.product_id == ^product_id and p.image_id == ^image_id,
+      update: [set: [is_main: true]]
+    )
+    |> Bmb.Repo.update_all([])
+    {:ok, "updated"}
   end
 
   defp default_pagination(%{:last => _} = data), do: data

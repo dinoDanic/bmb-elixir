@@ -167,5 +167,11 @@ defmodule BmbWeb.Schema do
       arg(:image_id, non_null(:id))
       resolve(&ProductResolver.remove_product_image_url/3)
     end
+
+    field :set_main_image, :string do
+      arg(:product_id, non_null(:id))
+      arg(:image_id, non_null(:id))
+      resolve(&ProductResolver.set_main_image/3)
+    end
   end
 end
