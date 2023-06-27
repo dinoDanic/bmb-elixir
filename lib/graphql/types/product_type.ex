@@ -24,6 +24,6 @@ defmodule Graphql.Types.Product do
     field(:recommendations, list_of(:product), resolve: &Bmb.ProductResolver.recommendations/3)
     field(:description, :description, resolve: &Bmb.ProductResolver.description/3)
     field(:category, :category, resolve: &Bmb.ProductResolver.category/3)
-    field(:image_url, :string, resolve: &Bmb.ProductResolver.image_url/3)
+    field(:images, list_of(:image), resolve: &Bmb.ProductResolver.images/3)
   end
 end

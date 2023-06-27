@@ -3,7 +3,8 @@ defmodule Bmb.Repo.Migrations.CreateImages do
 
   def change do
      create table(:images) do
-      add :url, :string
+      add :url, :string, null: false, unique: true
+      add :name, :string, null: false, unique: true
 
       timestamps()
     end

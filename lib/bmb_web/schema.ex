@@ -62,6 +62,13 @@ defmodule BmbWeb.Schema do
     field(:last_name, :string)
   end
 
+  object :image do
+    field(:url, :string)
+    field(:id, :id)
+    field(:is_main, :boolean)
+    field(:name, :string)
+  end
+
   input_object :edit_product_input do
     field(:name, :string)
     field(:display_name, :string)
@@ -143,7 +150,6 @@ defmodule BmbWeb.Schema do
       resolve(&ProductResolver.edit_product/3)
     end
 
-
     field :create_session, :session do
       arg(:input, :create_session_input)
       resolve(&CreateSession.resolve/3)
@@ -152,7 +158,14 @@ defmodule BmbWeb.Schema do
     field :add_product_image_url, :string do
       arg(:product_id, non_null(:string))
       arg(:image_url, non_null(:string))
+      arg(:product_name, non_null(:string))
       resolve(&ProductResolver.add_product_image_url/3)
+    end
+
+    field :remove_product_image_url, :string do
+      arg(:product_id, non_null(:id))
+      arg(:image_id, non_null(:id))
+      resolve(&ProductResolver.remove_product_image_url/3)
     end
   end
 end

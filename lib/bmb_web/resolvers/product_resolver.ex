@@ -196,57 +196,102 @@ defmodule Bmb.ProductResolver do
     {:ok, category}
   end
 
-  def image_url(product, _, _) do
-    image =
+  def images(product, _, _) do
+    images =
       from(p in Bmb.Product,
         join: pi in Bmb.ProductImages,
         on: p.id == pi.product_id,
         join: i in Bmb.Image,
         on: i.id == pi.image_id,
-        where: p.id == ^product.id and pi.is_main == true,
-        select: i
+        where: p.id == ^product.id,
+        select: %{id: i.id, url: i.url, is_main: pi.is_main }
       )
-      |> Bmb.Repo.one()
+      |> Bmb.Repo.all()
 
-    case image do
+    case images do
       nil ->
         {:ok, nil}
 
       _ ->
-        {:ok, image.url}
+        {:ok, images}
     end
   end
 
-  def add_product_image_url(_parent, %{product_id: product_id, image_url: image_url}, _info) do
-    image = %Image{url: image_url}
+  def add_product_image_url(
+        _parent,
+        %{product_id: product_id, image_url: image_url, product_name: product_name},
+        _info
+      ) do
+    case get_image_by_name(product_name) do
+      nil ->
+        image = %Image{url: image_url, name: product_name}
 
-    case Repo.insert(image) do
-      {:ok, inserted_image} ->
-        product_image = %ProductImages{
-          product_id: String.to_integer(product_id),
-          image_id: inserted_image.id
-        }
+        from(p in Bmb.ProductImages,
+          where: p.product_id == ^product_id,
+          update: [set: [is_main: false]]
+        )
+        |> Bmb.Repo.update_all([])
 
-        case Repo.insert(product_image) do
-          {:ok, _} ->
-            {:ok, "image added"}
+        case Bmb.Repo.insert(image) do
+          {:ok, inserted_image} ->
+            product_image = %ProductImages{
+              product_id: String.to_integer(product_id),
+              image_id: inserted_image.id,
+              is_main: true
+            }
+
+            case Bmb.Repo.insert(product_image) do
+              {:ok, _} ->
+                {:ok, "Image added"}
+
+              {:error, _} ->
+                {:error, "Something went wrong"}
+            end
 
           {:error, _} ->
-            {:error, "Something wrong"}
+            {:error, "Something went wrong"}
         end
 
-      {:error, _} ->
-        {:error, "Something wrong"}
+      _ ->
+        {:error, "Product name already exists"}
     end
+  end
 
-    # |> Repo.insert()
-    # |> Repo.insert(%ProductImages{
-    #   product_id: product_id ,
-    #   image_id: ,
-    #   })
-    #
-    #
-    # |> {:ok, "ok"}
+  defp get_image_by_name(product_name) do
+    Bmb.Image
+    |> where([i], i.name == ^product_name)
+    |> Bmb.Repo.one()
+  end
+
+  def remove_product_image_url(_parent, %{product_id: product_id, image_id: image_id}, _info) do
+    product_image =
+      from(p in Bmb.ProductImages,
+        where: p.product_id == ^product_id and p.image_id == ^image_id,
+        preload: [:product, :image]
+      )
+      |> Bmb.Repo.one()
+
+    case product_image do
+      nil ->
+        {:error, "Product image not found"}
+
+      %Bmb.ProductImages{product: _product, image: _image} ->
+        case Bmb.Repo.delete(product_image) do
+          {:ok, delete_product_image} ->
+            image = %Image{id: delete_product_image.image_id}
+
+            case Bmb.Repo.delete(image) do
+              {:ok, _} ->
+                {:ok, "Image deleted"}
+
+              {:error, _} ->
+                {:error, "Failed to remove image"}
+            end
+
+          {:error, _} ->
+            {:error, "Failed to remove product image"}
+        end
+    end
   end
 
   defp default_pagination(%{:last => _} = data), do: data

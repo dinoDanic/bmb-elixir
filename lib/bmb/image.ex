@@ -3,6 +3,7 @@ defmodule Bmb.Image do
 
   schema "images" do
     field(:url, :string)
+    field(:name, :string)
 
     timestamps()
   end
