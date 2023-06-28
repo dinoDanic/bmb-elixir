@@ -1,5 +1,6 @@
 defmodule BmbWeb.Schema do
   use Absinthe.Schema
+  alias Bmb.ImageResolver
   use BmbWeb.Auth.CustomMiddleware
   use Absinthe.Relay.Schema, :modern
 
@@ -140,6 +141,12 @@ defmodule BmbWeb.Schema do
     @desc "Get Complete list of categories"
     field :get_all_categories, list_of(:category) do
       resolve(&CategoryResolver.get_all_categories/3)
+    end
+
+    @desc "Validate before image upload"
+    field :validate_product_image_upload, :boolean do
+      arg(:image_name, :string)
+      resolve(&ImageResolver.validate_product_image_upload/3)
     end
   end
 

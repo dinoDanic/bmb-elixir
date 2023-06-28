@@ -226,18 +226,16 @@ defmodule Bmb.ProductResolver do
       nil ->
         image = %Image{url: image_url, name: product_name}
 
-        from(p in Bmb.ProductImages,
-          where: p.product_id == ^product_id,
-          update: [set: [is_main: false]]
-        )
-        |> Bmb.Repo.update_all([])
-
         case Bmb.Repo.insert(image) do
           {:ok, inserted_image} ->
+            is_main =
+              Bmb.Repo.one(from(p in Bmb.ProductImages, where: p.product_id == ^product_id)) ==
+                nil
+
             product_image = %ProductImages{
               product_id: String.to_integer(product_id),
               image_id: inserted_image.id,
-              is_main: true
+              is_main: is_main
             }
 
             case Bmb.Repo.insert(product_image) do
@@ -308,6 +306,7 @@ defmodule Bmb.ProductResolver do
       update: [set: [is_main: true]]
     )
     |> Bmb.Repo.update_all([])
+
     {:ok, "updated"}
   end
 

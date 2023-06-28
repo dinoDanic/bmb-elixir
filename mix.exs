@@ -50,7 +50,7 @@ defmodule Bmb.MixProject do
       {:cors_plug, "~> 3.0"},
       {:joken, "~> 2.6"},
       {:bcrypt_elixir, "~> 3.0"},
-      {:absinthe_relay, "~> 1.5.0"}
+      {:absinthe_relay, "~> 1.5.0"},
     ]
   end
 
