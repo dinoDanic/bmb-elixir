@@ -11,6 +11,7 @@ defmodule BmbWeb.Schema do
 
   import_types(Absinthe.Plug.Types)
   import_types(Graphql.Types.Product)
+  import_types(Graphql.Types.Category)
 
   connection(node_type: :product)
 
@@ -36,22 +37,12 @@ defmodule BmbWeb.Schema do
     field(:description, non_null(:string))
   end
 
-  object :category do
-    field(:name, :string)
-    field(:display_name, :string)
-    field(:parent_id, :string)
-    field(:active, :boolean)
-    field(:id, :id)
-    field(:childrens, list_of(:category), resolve: &CategoryResolver.get_childrens/3)
-  end
-
   object :description do
     field(:id, :id)
     field(:content, :string)
   end
 
   object :session do
-    # field(:account, :account)
     field(:token, :string)
   end
 
@@ -147,6 +138,12 @@ defmodule BmbWeb.Schema do
     field :validate_product_image_upload, :boolean do
       arg(:image_name, :string)
       resolve(&ImageResolver.validate_product_image_upload/3)
+    end
+
+    @desc "Search products"
+    field :search_products, list_of(:product) do
+      arg(:name, :string)
+      resolve(&ProductResolver.search_products/3)
     end
   end
 

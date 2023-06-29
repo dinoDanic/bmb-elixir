@@ -310,6 +310,17 @@ defmodule Bmb.ProductResolver do
     {:ok, "updated"}
   end
 
+  def search_products(_parent, %{name: name}, _info) do
+    query =
+      from p in Bmb.Product,
+        where: ilike(p.name, ^"%#{name}%")
+
+    case Repo.all(query) do
+      [] -> {:error, "No products found"}
+      products -> {:ok, products}
+    end
+  end
+
   defp default_pagination(%{:last => _} = data), do: data
 
   defp default_pagination(data), do: Map.put_new(data, :first, 1000)
