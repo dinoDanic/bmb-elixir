@@ -316,7 +316,7 @@ defmodule Bmb.ProductResolver do
         where: ilike(p.name, ^"%#{name}%")
 
     case Repo.all(query) do
-      [] -> {:error, "No products found"}
+      [] -> {:ok, nil}
       products -> {:ok, products}
     end
   end
