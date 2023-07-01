@@ -39,6 +39,17 @@ defmodule Bmb.ProductResolver do
           )
       end
 
+    query =
+      case Map.get(args, :active) do
+        nil ->
+          query
+
+        active ->
+          from(q in query,
+            where: q.active == ^active
+          )
+      end
+
     query |> Connection.from_query(&Repo.all/1, default_pagination(args))
   end
 
@@ -308,17 +319,6 @@ defmodule Bmb.ProductResolver do
     |> Bmb.Repo.update_all([])
 
     {:ok, "updated"}
-  end
-
-  def search_products(_parent, %{name: name}, _info) do
-    query =
-      from p in Bmb.Product,
-        where: ilike(p.name, ^"%#{name}%")
-
-    case Repo.all(query) do
-      [] -> {:ok, nil}
-      products -> {:ok, products}
-    end
   end
 
   defp default_pagination(%{:last => _} = data), do: data

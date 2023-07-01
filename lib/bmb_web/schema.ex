@@ -109,6 +109,7 @@ defmodule BmbWeb.Schema do
     connection field(:all_products, node_type: :product) do
       arg(:category_ids, list_of(:string))
       arg(:name, :string)
+      arg(:active, :boolean)
       resolve(&ProductResolver.all_products/3)
     end
 
@@ -140,11 +141,6 @@ defmodule BmbWeb.Schema do
       resolve(&ImageResolver.validate_product_image_upload/3)
     end
 
-    @desc "Search products"
-    field :search_products, list_of(:product) do
-      arg(:name, :string)
-      resolve(&ProductResolver.search_products/3)
-    end
   end
 
   mutation do
