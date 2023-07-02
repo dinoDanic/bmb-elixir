@@ -11,7 +11,9 @@ To start your Phoenix server:
   <!-- * Run `mix run priv/repo/seeds/seed_categories.ex` -->
   <!-- * Run `mix run priv/repo/seeds/seed_products_categories.ex` -->
   <!-- * Run `mix run priv/repo/seeds/seed_accounts.ex` -->
+  <!-- * Run `mix run priv/repo/seeds/seed_featured_products.ex` -->
  
+
   * Start Phoenix endpoint with `mix phx.server` or inside IEx with `iex -S mix phx.server`
 
 Now you can visit [`localhost:4000`](http://localhost:4000) from your browser.

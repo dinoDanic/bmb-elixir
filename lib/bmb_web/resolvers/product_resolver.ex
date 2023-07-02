@@ -159,28 +159,6 @@ defmodule Bmb.ProductResolver do
     end
   end
 
-  # TODO move decimal to scalars *.API.Graphql.Scalars.Decimal
-  # defmodule *.API.Graphql.Scalars.Decimal do
-  #   use Absinthe.Schema.Notation
-
-  #   scalar :decimal do
-  #     parse(fn
-  #       %{value: value}, _ ->
-  #         Decimal.parse(value)
-
-  #       # Temporary fix when decimal field isn't sent from the client.
-  #       # TODO: Fix to skip the field if field isn't sent.
-  #       %Absinthe.Blueprint.Input.Null{}, _ ->
-  #         {:ok, Decimal.new(0)}
-
-  #       _, _ ->
-  #         :error
-  #     end)
-
-  #     serialize(&to_string/1)
-  #   end
-  # end
-
   def edit_product(_parent, %{id: id, input: input}, _info) do
     input =
       if not is_nil(Map.get(input, :price)),

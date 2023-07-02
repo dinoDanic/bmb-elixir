@@ -1,5 +1,6 @@
 defmodule BmbWeb.Schema do
   use Absinthe.Schema
+  alias Bmb.FeaturedProductResolver
   alias Bmb.ImageResolver
   use BmbWeb.Auth.CustomMiddleware
   use Absinthe.Relay.Schema, :modern
@@ -11,6 +12,7 @@ defmodule BmbWeb.Schema do
 
   import_types(Absinthe.Plug.Types)
   import_types(Graphql.Types.Product)
+  import_types(Graphql.Types.FeaturedProduct)
   import_types(Graphql.Types.Category)
 
   connection(node_type: :product)
@@ -140,7 +142,6 @@ defmodule BmbWeb.Schema do
       arg(:image_name, :string)
       resolve(&ImageResolver.validate_product_image_upload/3)
     end
-
   end
 
   mutation do
