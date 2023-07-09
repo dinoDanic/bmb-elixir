@@ -5,6 +5,7 @@ seed_files = [
   "priv/repo/seeds/seed_products.ex",
   "priv/repo/seeds/seed_categories.ex",
   "priv/repo/seeds/seed_products_categories.ex",
+  "priv/repo/seeds/seed_products_recommendations.ex",
   "priv/repo/seeds/seed_accounts.ex",
   "priv/repo/seeds/seed_featured_products.ex"
 ]

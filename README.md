@@ -10,6 +10,7 @@ To start your Phoenix server:
   <!-- * Run `mix run priv/repo/seeds/seed_products.ex` -->
   <!-- * Run `mix run priv/repo/seeds/seed_categories.ex` -->
   <!-- * Run `mix run priv/repo/seeds/seed_products_categories.ex` -->
+  <!-- * Run `mix run priv/repo/seeds/seed_products_recommendations.ex` -->
   <!-- * Run `mix run priv/repo/seeds/seed_accounts.ex` -->
   <!-- * Run `mix run priv/repo/seeds/seed_featured_products.ex` -->
  

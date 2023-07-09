@@ -1,5 +1,5 @@
 alias Ecto.Repo
-alias Bmb.FeaturedProducts
+alias Bmb.FeaturedProduct
 alias Bmb.Repo
 
 featured_products = [
@@ -14,7 +14,7 @@ featured_products = [
 
 Repo.transaction(fn ->
   Enum.each(featured_products, fn %{product_id: product_id} ->
-    featured_product = %FeaturedProducts{
+    featured_product = %FeaturedProduct{
       product_id: product_id,
     }
 

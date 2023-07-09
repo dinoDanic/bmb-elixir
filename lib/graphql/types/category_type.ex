@@ -8,6 +8,6 @@ defmodule Graphql.Types.Category do
     field(:active, :boolean)
     field(:id, :id)
     field(:childrens, list_of(:category), resolve: &Bmb.CategoryResolver.get_childrens/3)
-    field(:images, list_of(:image), resolve: &Bmb.CategoryResolver.images/3)
+    field(:image, :string)
   end
 end

@@ -6,7 +6,6 @@ product_recomendation = [
   %{product_id: 1, recommended_product_id: 62 },
   %{product_id: 1, recommended_product_id: 47 },
   %{product_id: 1, recommended_product_id: 58 },
-  %{product_id: 1, recommended_product_id: 62 },
 ]
 
 

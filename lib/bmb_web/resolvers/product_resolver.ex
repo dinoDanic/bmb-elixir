@@ -145,8 +145,6 @@ defmodule Bmb.ProductResolver do
   def update_product(product, name) do
     product
     |> Ecto.Changeset.change(name)
-
-    # |> Ecto.Changeset.cast_assoc(:recommendations)
   end
 
   def save_product(product) do
@@ -297,6 +295,35 @@ defmodule Bmb.ProductResolver do
     |> Bmb.Repo.update_all([])
 
     {:ok, "updated"}
+  end
+
+  def add_recommendation(
+        _parent,
+        %{product_id: product_id, recommended_product_id: recommended_product_id},
+        _info
+      ) do
+    input = %ProductRecommendations{
+      product_id: String.to_integer(product_id),
+      recommended_product_id: String.to_integer(recommended_product_id)
+    }
+
+    case Bmb.Repo.insert(input) do
+      {:ok, inserted_recommendation} ->
+        {:ok, inserted_recommendation}
+
+      {:error, _} ->
+        {:error, "Failed to add recommendation"}
+    end
+  end
+
+  def get_recommendations(_parent, _args, _info) do
+    case Bmb.Repo.all(Bmb.ProductRecommendations) do
+      recommendations when is_list(recommendations) ->
+        {:ok, recommendations}
+
+      _ ->
+        {:error, "Failed to fetch recommendations"}
+    end
   end
 
   defp default_pagination(%{:last => _} = data), do: data

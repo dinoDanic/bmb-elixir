@@ -1,8 +1,7 @@
 defmodule Bmb.CategoryResolver do
-  alias Bmb.Image
-  alias Bmb.CategoryImages
   alias Bmb.Repo
   alias Bmb.Category
+  import Ecto.Changeset
   import Ecto.Query
 
   def get_categories(_parent, _args, _ctx) do
@@ -47,68 +46,23 @@ defmodule Bmb.CategoryResolver do
     end
   end
 
-  def images(product, _, _) do
-    images =
-      from(c in Bmb.Category,
-        join: ci in Bmb.CategoryImages,
-        on: c.id == ci.product_id,
-        join: i in Bmb.Image,
-        on: i.id == ci.image_id,
-        where: c.id == ^product.id,
-        select: %{id: i.id, url: i.url, is_main: ci.is_main}
-      )
-      |> Bmb.Repo.all()
+def add_image_to_category(_root, %{image_url: image_url, category_id: category_id}, _info) do
+  input = %{image: image_url}
 
-    case images do
-      nil ->
-        {:ok, nil}
+  case Bmb.Repo.get(Bmb.Category, category_id) do
+    nil ->
+      {:error, "Category not found"}
 
-      _ ->
-        {:ok, images}
-    end
+    category ->
+      changeset = Bmb.Category.changeset(category, input)
+
+      case Bmb.Repo.update(changeset) do
+        {:ok, updated_category} ->
+          {:ok, updated_category}
+
+        {:error, changeset} ->
+          {:error, "Failed to update category"}
+      end
   end
-
-  def add_category_image_url(
-        _parent,
-        %{category_id: category_id, image_url: image_url, category_name: category_name},
-        _info
-      ) do
-    case get_image_by_name(category_name) do
-      nil ->
-        image = %Image{url: image_url, name: category_name}
-
-        case Bmb.Repo.insert(image) do
-          {:ok, inserted_image} ->
-            is_main =
-              Bmb.Repo.one(from(p in Bmb.CategoryImages, where: p.category_id == ^category_id)) ==
-                nil
-
-            category_image = %CategoryImages{
-              category_id: String.to_integer(category_id),
-              image_id: inserted_image.id,
-              is_main: is_main
-            }
-
-            case Bmb.Repo.insert(category_image) do
-              {:ok, _} ->
-                {:ok, "Image added"}
-
-              {:error, _} ->
-                {:error, "Something went wrong"}
-            end
-
-          {:error, _} ->
-            {:error, "Something went wrong"}
-        end
-
-      _ ->
-        {:error, "Product name already exists"}
-    end
-  end
-
-  defp get_image_by_name(category_name) do
-    Bmb.Image
-    |> where([i], i.name == ^category_name)
-    |> Bmb.Repo.one()
-  end
+end
 end

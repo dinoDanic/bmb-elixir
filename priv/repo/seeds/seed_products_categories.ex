@@ -258,6 +258,7 @@ products_categories = [
   %{product_id: 346, category_id: 22 },
   %{product_id: 347, category_id: 22 },
   %{product_id: 348, category_id: 22 }
+  %{product_id: 349, category_id: 22 }
 ]
 
 

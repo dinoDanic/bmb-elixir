@@ -12,7 +12,6 @@ defmodule BmbWeb.Schema do
 
   import_types(Absinthe.Plug.Types)
   import_types(Graphql.Types.Product)
-  import_types(Graphql.Types.FeaturedProduct)
   import_types(Graphql.Types.Category)
 
   connection(node_type: :product)
@@ -142,6 +141,16 @@ defmodule BmbWeb.Schema do
       arg(:image_name, :string)
       resolve(&ImageResolver.validate_product_image_upload/3)
     end
+
+    @desc "Get featured products"
+    field :featured_products, list_of(:product) do
+      resolve(&FeaturedProductResolver.get_featured_products/3)
+    end
+
+    @desc "Get recommendatiosn"
+    field :recommendations, list_of(:product) do
+      resolve(&ProductResolver.get_recommendations/3)
+    end
   end
 
   mutation do
@@ -173,6 +182,18 @@ defmodule BmbWeb.Schema do
       arg(:product_id, non_null(:id))
       arg(:image_id, non_null(:id))
       resolve(&ProductResolver.set_main_image/3)
+    end
+
+    field :add_image_to_category, :category do
+      arg(:category_id, non_null(:id))
+      arg(:image_url, non_null(:string))
+      resolve(&CategoryResolver.add_image_to_category/3)
+    end
+
+    field :add_recommendation, :product do
+      arg(:product_id, non_null(:id))
+      arg(:recommended_product_id, non_null(:id))
+      resolve(&ProductResolver.add_recommendation/3)
     end
   end
 end
