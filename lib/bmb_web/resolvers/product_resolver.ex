@@ -316,6 +316,30 @@ defmodule Bmb.ProductResolver do
     end
   end
 
+  def remove_recommendation(
+        _parent,
+        %{product_id: product_id, recommended_product_id: recommended_product_id},
+        _info
+      ) do
+    query =
+      from(pr in Bmb.ProductRecommendations,
+        where:
+          pr.product_id == ^String.to_integer(product_id) and
+            pr.recommended_product_id == ^String.to_integer(recommended_product_id)
+      )
+
+    case Bmb.Repo.delete(query) do
+      {:ok, 1} ->
+        {:ok, true}
+
+      {:ok, 0} ->
+        {:error, "Recommendation not found"}
+
+      {:error, _} ->
+        {:error, "Failed to remove recommendation"}
+    end
+  end
+
   def get_recommendations(_parent, _args, _info) do
     case Bmb.Repo.all(Bmb.ProductRecommendations) do
       recommendations when is_list(recommendations) ->

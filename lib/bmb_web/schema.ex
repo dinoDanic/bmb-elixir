@@ -195,5 +195,11 @@ defmodule BmbWeb.Schema do
       arg(:recommended_product_id, non_null(:id))
       resolve(&ProductResolver.add_recommendation/3)
     end
+
+    field :remove_recommendation, :string do
+      arg(:product_id, non_null(:id))
+      arg(:recommended_product_id, non_null(:id))
+      resolve(&ProductResolver.remove_recommendation/3)
+    end
   end
 end
