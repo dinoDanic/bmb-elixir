@@ -2,16 +2,20 @@ alias Ecto.Repo
 alias Bmb.ProductRecommendations
 alias Bmb.Repo
 
-product_recomendation = [
-  %{product_id: 1, recommended_product_id: 62 },
-  %{product_id: 1, recommended_product_id: 47 },
-  %{product_id: 1, recommended_product_id: 58 },
-]
+File.stream!("#{System.user_home()}/projects/bmb/bmb-elixir/csv/products_recommendations.csv")
+|> CSV.decode(headers: true, escape_max_lines: 1000)
+|> Enum.each(fn row ->
+  {:ok,
+   %{
+     "product_id" => product_id,
+     "product_related_id" => recommended_product_id,
+   }} = row
 
 
-Repo.transaction(fn ->
-  Enum.each(product_recomendation, fn %{product_id: product_id, recommended_product_id: recommended_product_id} ->
-    product_recomendations = %ProductRecommendations{product_id: product_id, recommended_product_id: recommended_product_id}
-    Repo.insert!(product_recomendations)
-  end)
+  %ProductRecommendations{
+    product_id: String.to_integer(product_id),
+    recommended_product_id: String.to_integer(recommended_product_id),
+  }
+  |> Repo.insert!()
+
 end)
