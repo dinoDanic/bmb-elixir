@@ -7,7 +7,6 @@ defmodule Bmb.ProductResolver do
   import Ecto.Changeset
   alias Bmb.Repo
   import Ecto.Query
-  alias Bmb.ProductCategory
 
   def all_products(_root, args, _info) do
     query =
@@ -328,15 +327,19 @@ defmodule Bmb.ProductResolver do
             pr.recommended_product_id == ^String.to_integer(recommended_product_id)
       )
 
-    case Bmb.Repo.delete(query) do
+
+    case Bmb.Repo.delete_all(query) do
       {:ok, 1} ->
         {:ok, true}
 
       {:ok, 0} ->
-        {:error, "Recommendation not found"}
+        {:error, false}
 
       {:error, _} ->
-        {:error, "Failed to remove recommendation"}
+        {:error, false}
+
+      {count, extra} ->
+        {:error,  extra}
     end
   end
 
