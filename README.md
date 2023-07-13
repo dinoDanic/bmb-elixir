@@ -13,6 +13,7 @@ To start your Phoenix server:
   <!-- * Run `mix run priv/repo/seeds/seed_products_recommendations.ex` -->
   <!-- * Run `mix run priv/repo/seeds/seed_accounts.ex` -->
   <!-- * Run `mix run priv/repo/seeds/seed_featured_products.ex` -->
+  <!-- * Run `mix run priv/repo/seeds/seed_products_instructions_download_urls.ex` -->
  
 
   * Start Phoenix endpoint with `mix phx.server` or inside IEx with `iex -S mix phx.server`

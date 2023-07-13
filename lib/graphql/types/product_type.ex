@@ -20,6 +20,7 @@ defmodule Graphql.Types.Product do
     field(:firebox, :string)
     field(:height, :string)
     field(:work_board, :string)
+    field(:instructions_download_url, :string)
     field(:active, :boolean)
     field(:recommendations, list_of(:product), resolve: &Bmb.ProductResolver.recommendations/3)
     field(:description, :description, resolve: &Bmb.ProductResolver.description/3)

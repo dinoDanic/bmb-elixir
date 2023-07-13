@@ -16,6 +16,7 @@ defmodule Bmb.Product do
     field(:height, :string)
     field(:work_board, :string)
     field(:description_id, :integer)
+    field(:instructions_download_url, :string)
     field(:active, :boolean, default: false)
 
     has_many(:product_categories, Bmb.ProductCategory)
