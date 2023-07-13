@@ -10,6 +10,7 @@ alias Bmb.Repo
 #   4	Dekorativne obloge
 #   5	Industrijska galanterija
 #   6	Ostali proizvodi	
+
 #   7	Mini kamini	
 #   8	Roštilji	
 #   9	Mini pečenjare
@@ -257,8 +258,20 @@ products_categories = [
   %{product_id: 345, category_id: 22 },
   %{product_id: 346, category_id: 22 },
   %{product_id: 347, category_id: 22 },
-  %{product_id: 348, category_id: 22 }
-  %{product_id: 349, category_id: 22 }
+  %{product_id: 348, category_id: 22 },
+  %{product_id: 349, category_id: 22 },
+  %{product_id: 389, category_id: 21 },
+  %{product_id: 390, category_id: 21 },
+  %{product_id: 391, category_id: 21 },
+  %{product_id: 392, category_id: 21 },
+  %{product_id: 395, category_id: 13 },
+  %{product_id: 396, category_id: 13 },
+  %{product_id: 397, category_id: 13 },
+  %{product_id: 398, category_id: 15 },
+  %{product_id: 403, category_id: 23 },
+  %{product_id: 404, category_id: 23 },
+  %{product_id: 406, category_id: 23 },
+  %{product_id: 411, category_id: 8 },
 ]
 
 
