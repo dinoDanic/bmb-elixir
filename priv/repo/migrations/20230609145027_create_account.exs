@@ -2,7 +2,7 @@ defmodule Bmb.Repo.Migrations.CreateAccount do
   use Ecto.Migration
 
   def change do
-    # execute("CREATE EXTENSION citext;")
+    execute("CREATE EXTENSION citext;")
 
     create table(:accounts) do
       add(:email, :citext)
