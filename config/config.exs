@@ -17,7 +17,7 @@ config :cors_plug,
     "http://localhost:3009",
     "http://localhost:3001",
     "http://167.235.150.40:3000",
-    "bmb-elixir-production.up.railway.app",
+    "https://bmb-next-three.vercel.app",
     "bmb-next-three.vercel.app"
   ],
   methods: ["GET", "POST", "FETCH", "OPTIONS"]
