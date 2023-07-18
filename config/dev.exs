@@ -3,9 +3,10 @@ import Config
 # Configure your database
 config :bmb, Bmb.Repo,
   username: "postgres",
-  password: "Ruda,actv1",
-  hostname: "167.235.150.40",
-  database: "bmb-dev",
+  password: "R0irqyxUip5zFTMPsPZ4",
+  hostname: "containers-us-west-112.railway.app",
+  port: 5917,
+  database: "railway",
   stacktrace: true,
   show_sensitive_data_on_connection_error: true,
   pool_size: 10
