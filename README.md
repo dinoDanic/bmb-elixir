@@ -19,3 +19,6 @@ To start your Phoenix server:
   * Start Phoenix endpoint with `mix phx.server` or inside IEx with `iex -S mix phx.server`
 
 
+
+<!-- `mix run priv/repo/seeds.exs` -->
+
