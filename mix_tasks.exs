@@ -6,6 +6,10 @@ defmodule MixTasks do
     run("run priv/repo/seeds/seed_products.ex")
     run("run priv/repo/seeds/seed_categories.ex")
     run("run priv/repo/seeds/seed_products_categories.ex")
+    run("run priv/repo/seeds/seed_products_recommendations.ex")
+    run("run priv/repo/seeds/seed_accounts.ex")
+    run("run priv/repo/seeds/seed_featured_products.ex")
+    run("run priv/repo/seeds/seed_products_instructions_download_urls.ex")
   end
 
   defp run(command) do
