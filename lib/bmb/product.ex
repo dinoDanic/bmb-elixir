@@ -25,8 +25,6 @@ defmodule Bmb.Product do
     has_many(:product_images, Bmb.ProductImages)
     has_many(:images, through: [:product_images, :image])
 
-    @indexes [{:name, :asc}]
-
     timestamps()
   end
 

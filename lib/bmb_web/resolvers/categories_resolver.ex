@@ -1,7 +1,6 @@
 defmodule Bmb.CategoryResolver do
   alias Bmb.Repo
   alias Bmb.Category
-  import Ecto.Changeset
   import Ecto.Query
 
   def get_categories(_parent, _args, _ctx) do
@@ -60,7 +59,7 @@ def add_image_to_category(_root, %{image_url: image_url, category_id: category_i
         {:ok, updated_category} ->
           {:ok, updated_category}
 
-        {:error, changeset} ->
+        {:error, _changeset} ->
           {:error, "Failed to update category"}
       end
   end

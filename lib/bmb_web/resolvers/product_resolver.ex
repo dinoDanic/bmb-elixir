@@ -338,7 +338,7 @@ defmodule Bmb.ProductResolver do
       {:error, _} ->
         {:error, false}
 
-      {count, extra} ->
+      {_count, extra} ->
         {:error,  extra}
     end
   end
