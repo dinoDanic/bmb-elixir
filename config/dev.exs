@@ -1,4 +1,4 @@
-mport(Config)
+import(Config)
 
 # Configure your database
 config :bmb, Bmb.Repo,
