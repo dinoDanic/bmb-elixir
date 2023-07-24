@@ -10,13 +10,7 @@ config :swoosh, api_client: Swoosh.ApiClient.Finch, finch_name: Bmb.Finch
 # CORS
 config :cors_plug,
   origin: [
-    "http://localhost:3000",
-    "http://localhost:3009",
-    "http://localhost:3001",
-    "http://167.235.150.40:3000",
-    "https://bmb-next-production.up.railway.app",
-    "https://bmb-next-production.up.railway.app",
-    "https://bmb-next-dev.vercel.app"
+    "https://bmb-next-prod.vercel.app"
   ],
   methods: ["GET", "POST", "FETCH", "OPTIONS"]
 

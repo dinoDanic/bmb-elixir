@@ -6,6 +6,7 @@ config :bmb, Bmb.Repo,
   password: "Ruda,actv1",
   hostname: "167.235.150.40",
   database: "bmb-dev",
+  port: 5432,
   stacktrace: true,
   show_sensitive_data_on_connection_error: true,
   pool_size: 10
