@@ -33,6 +33,16 @@ defmodule Bmb.CategoryResolver do
     {:ok, Repo.all(query)}
   end
 
+  def get_parent_category(%{parent_id: parent_id}, _args, _ctx) do
+    query =
+      from(c in Category,
+        where: c.active == true and c.category_id == ^parent_id,
+        select: c
+      )
+
+    {:ok, Repo.one(query)}
+  end
+
   def get_category_by_id(_root, %{id: id}, _info) do
     category = Repo.get(Category, id)
 
@@ -45,23 +55,35 @@ defmodule Bmb.CategoryResolver do
     end
   end
 
-def add_image_to_category(_root, %{image_url: image_url, category_id: category_id}, _info) do
-  input = %{image: image_url}
+  def get_category_by_name(_root, %{name: name}, _info) do
+    category = Repo.get_by(Category, name: name)
 
-  case Bmb.Repo.get(Bmb.Category, category_id) do
-    nil ->
-      {:error, "Category not found"}
+    case category do
+      nil ->
+        {:error, "category not found"}
 
-    category ->
-      changeset = Bmb.Category.changeset(category, input)
-
-      case Bmb.Repo.update(changeset) do
-        {:ok, updated_category} ->
-          {:ok, updated_category}
-
-        {:error, _changeset} ->
-          {:error, "Failed to update category"}
-      end
+      _ ->
+        {:ok, category}
+    end
   end
-end
+
+  def add_image_to_category(_root, %{image_url: image_url, category_id: category_id}, _info) do
+    input = %{image: image_url}
+
+    case Bmb.Repo.get(Bmb.Category, category_id) do
+      nil ->
+        {:error, "Category not found"}
+
+      category ->
+        changeset = Bmb.Category.changeset(category, input)
+
+        case Bmb.Repo.update(changeset) do
+          {:ok, updated_category} ->
+            {:ok, updated_category}
+
+          {:error, _changeset} ->
+            {:error, "Failed to update category"}
+        end
+    end
+  end
 end

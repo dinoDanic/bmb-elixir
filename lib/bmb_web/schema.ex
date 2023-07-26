@@ -120,6 +120,12 @@ defmodule BmbWeb.Schema do
       resolve(&ProductResolver.get_products_by_category_id/3)
     end
 
+    @desc "Get Products by Category name"
+    field :get_products_by_category_name, list_of(:product) do
+      arg(:category_name, non_null(:string))
+      resolve(&ProductResolver.get_products_by_category_name/3)
+    end
+
     @desc "Get categories"
     field :get_categories, list_of(:category) do
       resolve(&CategoryResolver.get_categories/3)
@@ -129,6 +135,12 @@ defmodule BmbWeb.Schema do
     field :get_category_by_id, :category do
       arg(:id, non_null(:id))
       resolve(&CategoryResolver.get_category_by_id/3)
+    end
+
+    @desc "Get Category by name"
+    field :get_category_by_name, :category do
+      arg(:name, non_null(:string))
+      resolve(&CategoryResolver.get_category_by_name/3)
     end
 
     @desc "Get Complete list of categories"

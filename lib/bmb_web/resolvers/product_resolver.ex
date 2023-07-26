@@ -90,6 +90,23 @@ defmodule Bmb.ProductResolver do
     {:ok, products}
   end
 
+  def get_products_by_category_name(_root, %{category_name: category_name}, _info) do
+
+    products =
+      from(p in Product,
+        join: pc in ProductCategory,
+        on: p.id == pc.product_id,
+        join: c in Category,
+        on: c.id == pc.category_id,
+        where: c.name == ^category_name and p.active == true,
+        select: p,
+        distinct: true
+      )
+      |> Repo.all()
+
+    {:ok, products}
+  end
+
   def price_with_tax(product, _args, _ctx) do
     tax_percentage = 25
 
@@ -327,7 +344,6 @@ defmodule Bmb.ProductResolver do
             pr.recommended_product_id == ^String.to_integer(recommended_product_id)
       )
 
-
     case Bmb.Repo.delete_all(query) do
       {:ok, 1} ->
         {:ok, true}
@@ -339,7 +355,7 @@ defmodule Bmb.ProductResolver do
         {:error, false}
 
       {_count, extra} ->
-        {:error,  extra}
+        {:error, extra}
     end
   end
 
