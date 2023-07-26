@@ -7,6 +7,7 @@ defmodule Bmb.Category do
     field :name, :string
     field :display_name, :string
     field :parent_id, :id
+    field :category_id, :id
     field :active, :boolean, default: true
     field :image, :string
 

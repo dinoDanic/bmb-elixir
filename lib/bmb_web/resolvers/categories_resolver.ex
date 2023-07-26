@@ -26,7 +26,7 @@ defmodule Bmb.CategoryResolver do
   def get_childrens(category, _args, _ctx) do
     query =
       from(c in Category,
-        where: c.active == true and c.parent_id == ^category.id,
+        where: c.active == true and c.parent_id == ^category.category_id,
         select: c
       )
 
