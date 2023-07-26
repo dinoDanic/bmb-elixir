@@ -18,6 +18,8 @@ RUN mix local.hex --force && \
 # Build the application
 RUN mix compile
 
+ENV MIX_ENV=production
+
 # Start the application
 EXPOSE 4000
 COPY entrypoint.sh /usr/bin/
