@@ -16,6 +16,7 @@ config :cors_plug,
     "http://localhost:3000",
     "http://localhost:3009",
     "http://localhost:3001",
+    "https://bmb-next-prod.vercel.app"
   ],
   methods: ["GET", "POST", "FETCH", "OPTIONS"]
 
