@@ -17,13 +17,11 @@ defmodule Bmb.Product do
     field(:work_board, :string)
     field(:description_id, :integer)
     field(:instructions_download_url, :string)
+    field(:image_url, :string)
     field(:active, :boolean, default: false)
 
     has_many(:product_categories, Bmb.ProductCategory)
     has_many(:categories, through: [:product_categories, :category])
-
-    has_many(:product_images, Bmb.ProductImages)
-    has_many(:images, through: [:product_images, :image])
 
     timestamps()
   end

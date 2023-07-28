@@ -17,6 +17,7 @@ defmodule Bmb.Repo.Migrations.CreateProduct do
       add :firebox, :string, null: true
       add :height, :string, null: true
       add :work_board, :string, null: true
+      add :image_url, :string, null: true
       add :active, :boolean, null: false
 
       add :description_id, references(:descriptions)

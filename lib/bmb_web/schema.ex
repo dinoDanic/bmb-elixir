@@ -1,7 +1,6 @@
 defmodule BmbWeb.Schema do
   use Absinthe.Schema
   alias Bmb.FeaturedProductResolver
-  alias Bmb.ImageResolver
   use BmbWeb.Auth.CustomMiddleware
   use Absinthe.Relay.Schema, :modern
 
@@ -55,13 +54,6 @@ defmodule BmbWeb.Schema do
     field(:last_name, :string)
   end
 
-  object :image do
-    field(:url, :string)
-    field(:id, :id)
-    field(:is_main, :boolean)
-    field(:name, :string)
-  end
-
   input_object :edit_product_input do
     field(:name, :string)
     field(:display_name, :string)
@@ -72,6 +64,7 @@ defmodule BmbWeb.Schema do
     field(:firebox, :string)
     field(:work_board, :string)
     field(:ean, :string)
+    field(:image_url, :string)
   end
 
   input_object :create_session_input do
@@ -148,12 +141,6 @@ defmodule BmbWeb.Schema do
       resolve(&CategoryResolver.get_all_categories/3)
     end
 
-    @desc "Validate before image upload"
-    field :validate_product_image_upload, :boolean do
-      arg(:image_name, :string)
-      resolve(&ImageResolver.validate_product_image_upload/3)
-    end
-
     @desc "Get featured products"
     field :featured_products, list_of(:product) do
       resolve(&FeaturedProductResolver.get_featured_products/3)
@@ -175,25 +162,6 @@ defmodule BmbWeb.Schema do
     field :create_session, :session do
       arg(:input, :create_session_input)
       resolve(&CreateSession.resolve/3)
-    end
-
-    field :add_product_image_url, :string do
-      arg(:product_id, non_null(:string))
-      arg(:image_url, non_null(:string))
-      arg(:product_name, non_null(:string))
-      resolve(&ProductResolver.add_product_image_url/3)
-    end
-
-    field :remove_product_image_url, :string do
-      arg(:product_id, non_null(:id))
-      arg(:image_id, non_null(:id))
-      resolve(&ProductResolver.remove_product_image_url/3)
-    end
-
-    field :set_main_image, :string do
-      arg(:product_id, non_null(:id))
-      arg(:image_id, non_null(:id))
-      resolve(&ProductResolver.set_main_image/3)
     end
 
     field :add_image_to_category, :category do

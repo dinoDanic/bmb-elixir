@@ -21,10 +21,10 @@ defmodule Graphql.Types.Product do
     field(:height, :string)
     field(:work_board, :string)
     field(:instructions_download_url, :string)
+    field(:image_url, :string)
     field(:active, :boolean)
     field(:recommendations, list_of(:product), resolve: &Bmb.ProductResolver.recommendations/3)
     field(:description, :description, resolve: &Bmb.ProductResolver.description/3)
     field(:category, :category, resolve: &Bmb.ProductResolver.category/3)
-    field(:images, list_of(:image), resolve: &Bmb.ProductResolver.images/3)
   end
 end
