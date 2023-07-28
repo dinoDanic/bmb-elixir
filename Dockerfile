@@ -27,3 +27,4 @@ RUN chmod +x /usr/bin/entrypoint.sh
 # ENTRYPOINT ["entrypoint.sh"]
 CMD ["mix", "phx.server"]
 
+
