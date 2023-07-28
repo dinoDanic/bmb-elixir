@@ -2,11 +2,11 @@ import Config
 
 # Configure your database
 config :bmb, Bmb.Repo,
-  username: "postgres",
-  password: "Ruda,actv1",
-  hostname: "167.235.150.40",
-  database: "bmb-dev",
-  port: 5432,
+  username: System.get_env("PGUSER"),
+  password: System.get_env("PGPASSWORD"),
+  hostname: System.get_env("PGHOST"),
+  database: System.get_env("PGDATABASE"),
+  port: System.get_env("PGPORT"),
   stacktrace: true,
   show_sensitive_data_on_connection_error: true,
   pool_size: 10
@@ -26,7 +26,6 @@ config :bmb, BmbWeb.Endpoint,
   debug_errors: true,
   secret_key_base: "uvwuQObU9x/xGbok+rb2N2tqLpeCGqckq0SYH1vcFJNiM3gymmSYYX2GDCqCjPSG",
   watchers: []
-
 
 # ## SSL Support
 #
