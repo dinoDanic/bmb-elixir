@@ -18,7 +18,7 @@ RUN mix local.hex --force && \
 # Build the application
 RUN mix compile
 
-# ENV MIX_ENV=prod
+ENV MIX_ENV=prod
 
 # Start the application
 EXPOSE 4000
