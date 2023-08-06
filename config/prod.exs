@@ -20,7 +20,7 @@ config :bmb, Bmb.Repo,
 # CORS
 config :cors_plug,
   origin: [
-    "https://bmb-next-prod.vercel.app"
+    "https://bmb-prod.vercel.app"
   ],
   methods: ["GET", "POST", "FETCH", "OPTIONS"]
 
