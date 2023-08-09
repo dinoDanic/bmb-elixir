@@ -26,5 +26,6 @@ defmodule Graphql.Types.Product do
     field(:recommendations, list_of(:product), resolve: &Bmb.ProductResolver.recommendations/3)
     field(:description, :description, resolve: &Bmb.ProductResolver.description/3)
     field(:category, :category, resolve: &Bmb.ProductResolver.category/3)
+    field(:updated_at, :string)
   end
 end
