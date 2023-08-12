@@ -1,31 +1,16 @@
 import Config
 
 # Configure your database
+
 config :bmb, Bmb.Repo,
-  username: System.get_env("PGUSER"),
-  password: System.get_env("PGPASSWORD"),
-  hostname: System.get_env("PGHOST"),
-  database: System.get_env("PGDATABASE"),
-  port: System.get_env("PGPORT"),
+  username: "postgres",
+  password: "Ruda,actv1",
+  hostname: "167.235.150.40",
+  database: "bmb-dev",
+  port: 5432,
   stacktrace: true,
   show_sensitive_data_on_connection_error: true,
   pool_size: 10
-
-# config :bmb, Bmb.Repo,
-#   username: "postgres",
-#   password: "Ruda,actv1",
-#   hostname: "167.235.150.40",
-#   database: "bmb-dev",
-#   port: 5432,
-#   stacktrace: true,
-#   show_sensitive_data_on_connection_error: true,
-#   pool_size: 10
-
-# username: System.get_env("PGUSER"),
-# password: System.get_env("PGPASSWORD"),
-# hostname: System.get_env("PGHOST"),
-# database: System.get_env("PGDATABASE"),
-# port: System.get_env("PGPORT"),
 
 # For development, we disable any cache and enable
 # debugging and code reloading.
