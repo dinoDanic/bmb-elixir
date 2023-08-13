@@ -18,7 +18,6 @@ defmodule Graphql.Types.Product do
     field(:ean, :string)
     field(:weight, :decimal)
     field(:firebox, :string)
-    field(:height, :string)
     field(:work_board, :string)
     field(:instructions_download_url, :string)
     field(:image_url, :string)
@@ -27,5 +26,9 @@ defmodule Graphql.Types.Product do
     field(:description, :description, resolve: &Bmb.ProductResolver.description/3)
     field(:category, :category, resolve: &Bmb.ProductResolver.category/3)
     field(:updated_at, :string)
+    field(:dubina, :string)
+    field(:sirina, :string)
+    field(:visina, :string)
+    field(:promjer, :string)
   end
 end

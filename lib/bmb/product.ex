@@ -13,12 +13,15 @@ defmodule Bmb.Product do
     field(:ean, :string)
     field(:weight, :string)
     field(:firebox, :string)
-    field(:height, :string)
     field(:work_board, :string)
     field(:description_id, :integer)
     field(:instructions_download_url, :string)
     field(:image_url, :string)
     field(:active, :boolean, default: false)
+    field(:dubina, :string)
+    field(:sirina, :string)
+    field(:visina, :string)
+    field(:promjer, :string)
 
     has_many(:product_categories, Bmb.ProductCategory)
     has_many(:categories, through: [:product_categories, :category])
@@ -36,8 +39,15 @@ defmodule Bmb.Product do
       :meta_keyword,
       :ean,
       :weight,
-      :active
+      :active,
+      :dubina,
+      :sirina,
+      :visina,
+      :promjer,
+      :firebox,
+      :height,
+      :work_board
     ])
-    |> validate_required([:name, :price, :ean])
+    |> validate_required([:name, :price])
   end
 end
