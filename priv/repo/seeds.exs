@@ -8,7 +8,8 @@ seed_files = [
   "priv/repo/seeds/seed_products_recommendations.ex",
   "priv/repo/seeds/seed_accounts.ex",
   "priv/repo/seeds/seed_featured_products.ex",
-  "priv/repo/seeds/seed_products_instructions_download_urls.ex"
+  "priv/repo/seeds/seed_products_instructions_download_urls.ex",
+  "priv/repo/seeds/seed_update_products_info.ex"
 ]
 
 # Iterate over the seed files and run each one

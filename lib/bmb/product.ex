@@ -45,7 +45,6 @@ defmodule Bmb.Product do
       :visina,
       :promjer,
       :firebox,
-      :height,
       :work_board
     ])
     |> validate_required([:name, :price])
