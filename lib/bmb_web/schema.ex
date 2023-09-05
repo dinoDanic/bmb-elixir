@@ -68,6 +68,7 @@ defmodule BmbWeb.Schema do
     field(:work_board, :string)
     field(:ean, :string)
     field(:image_url, :string)
+    field(:description, :string)
   end
 
   input_object :create_session_input do

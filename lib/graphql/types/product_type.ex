@@ -23,12 +23,12 @@ defmodule Graphql.Types.Product do
     field(:image_url, :string)
     field(:active, :boolean)
     field(:recommendations, list_of(:product), resolve: &Bmb.ProductResolver.recommendations/3)
-    field(:description, :description, resolve: &Bmb.ProductResolver.description/3)
     field(:category, :category, resolve: &Bmb.ProductResolver.category/3)
     field(:updated_at, :string)
     field(:dubina, :string)
     field(:sirina, :string)
     field(:visina, :string)
     field(:promjer, :string)
+    field(:description, :string)
   end
 end

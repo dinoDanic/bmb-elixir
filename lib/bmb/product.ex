@@ -22,6 +22,7 @@ defmodule Bmb.Product do
     field(:sirina, :string)
     field(:visina, :string)
     field(:promjer, :string)
+    field(:description, :string)
 
     has_many(:product_categories, Bmb.ProductCategory)
     has_many(:categories, through: [:product_categories, :category])
@@ -45,7 +46,8 @@ defmodule Bmb.Product do
       :visina,
       :promjer,
       :firebox,
-      :work_board
+      :work_board,
+      :description
     ])
     |> validate_required([:name, :price])
   end

@@ -5,8 +5,9 @@ alias Schemas.Account
 |> Account.changeset(%{
   first_name: "BMB",
   last_name: "Admin",
-  password: "Ruda,actv1!",
+  password: "bmb_1",
   username: "bmb_admin",
-  email: "dino.danic@gmail.com"
+  email: "petrabogdan777@gmail.com"
+  # email: "bozica.dananic@gmail.com"
 })
 |> Repo.insert()
